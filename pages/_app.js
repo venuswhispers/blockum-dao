@@ -24,7 +24,7 @@ import { Web3Provider } from '../src/contexts/web3Context';
 import SpinnerProvider from '../src/contexts/spinnerContext';
 import NotificationProvider from '../src/contexts/notificationContext';
 
-axios.defaults.baseURL = 'http://95.216.112.100:5005/api';
+axios.defaults.baseURL = 'https://blockum.onrender.com/api';
 
 
 function MyApp({ Component, pageProps }) {
