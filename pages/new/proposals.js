@@ -237,7 +237,7 @@ const Proposals = () => {
           </Grid>
           <Typography color='#2683F6' fontSize={15} mt={1}>Are you in favor of Promoting this Proposal?</Typography>
           <Grid container mt={1}>
-            <Grid item container justifyContent='space-between' md={12} lg={7} gap={{xs:1, lg:0}}>
+            <Grid item container justifyContent='start' md={12} lg={7} gap={{xs:1, lg:3}}>
               <Button onClick={ () => handleVoteYesClick(data) } variant="contained" sx={{backgroundColor:"#2683F6", borderRadius:5, fontSize:'15px!important', width:{xs:'100%', lg:130}}} size='small'>YES</Button>
               <Button onClick={ () => handleVoteNoClick(data) } variant="contained" sx={{backgroundColor:"#041431", borderRadius:5, fontSize:'15px!important', width:{xs:'100%', lg:130}}} size='small'>N O</Button>
             </Grid>
