@@ -1,0 +1,19 @@
+
+
+.scrollable-div {
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #f1f1f1;
+}
+
+/* For WebKit-based browsers (Chrome, Safari) */
+.scrollable-div::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-div::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+  background-color: #888888;
+}
