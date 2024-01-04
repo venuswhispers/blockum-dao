@@ -4,18 +4,18 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React from 'react'
-import TextField from '../../src/components/TextField';
+import TextField from '../src/components/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'next/router';
-import useWeb3 from '../../src/hooks/useWeb3';
-import useNotification from '../../src/hooks/useNotification';
+import useWeb3 from '../src/hooks/useWeb3';
+import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
-import useSpinner from '../../src/hooks/useSpinner';
+import useSpinner from '../src/hooks/useSpinner';
 import { useDispatch } from 'react-redux';
 
 
-import { ADD_DEPOSIT, ADD_DISTRIBUTE } from '../../src/redux/action/type';
+import { ADD_DEPOSIT, ADD_DISTRIBUTE } from '../src/redux/action/type';
 
 
 const Distribute = () => {
@@ -98,7 +98,7 @@ const Distribute = () => {
       });
 
       await updateWallet();
-      router.push("/new/home");
+      router.push("/home");
     } catch (error) {
       console.log(error);
       showNotification("Distribution failed.", "error");
@@ -114,7 +114,7 @@ const Distribute = () => {
   return (
     <Box backgroundColor='#041431' position='fixed' top={0} left={0} right={0} bottom={0} sx={{overflowY:'auto'}}>
       <Box px={{ xs:3, sm:10 }} position='relative' backgroundColor='#1C1C39' maxWidth={550} pt={10} minHeight='100vh' pb={4} margin='auto'>
-        <Box position='absolute' top={15} right={15} sx={{cursor:'pointer', '&:hover':{opacity:0.7}}}><Icon onClick={() => router.push("/new/home")} icon="mingcute:close-fill" width={30} color="white" /></Box>
+        <Box position='absolute' top={15} right={15} sx={{cursor:'pointer', '&:hover':{opacity:0.7}}}><Icon onClick={() => router.push("/home")} icon="mingcute:close-fill" width={30} color="white" /></Box>
         <Grid item container justifyContent='center' gap={1}>
           <img src='/icons/logo.png' width={50}/>
           <Typography color='white' fontSize={25} fontWeight={600}>BLOCKUM</Typography>

@@ -5,14 +5,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useSelector, useDispatch } from 'react-redux';
-import useWeb3 from '../../src/hooks/useWeb3';
+import useWeb3 from '../src/hooks/useWeb3';
 import axios from 'axios';
-import useSpinner from '../../src/hooks/useSpinner';
-import useNotification from '../../src/hooks/useNotification';
+import useSpinner from '../src/hooks/useSpinner';
+import useNotification from '../src/hooks/useNotification';
 
 import { useRouter } from 'next/router';
 
-import { _timestampToDateForDeposit, _timestampToDateForDistribute, _truncateText } from '../../src/customUtils';
+import { _timestampToDateForDeposit, _timestampToDateForDistribute, _truncateText } from '../src/customUtils';
 
 const Home = () => {
 
@@ -127,7 +127,7 @@ const Home = () => {
   return (
     <Box padding={{ xs: 1, md: 5 }}>
       <Grid container justifyContent='end'>
-        <Box sx={{cursor:'pointer'}} display='flex' onClick={() => router.push("/new/proposals")} alignItems='center'><Typography color="#2683F6" fontWeight={600}>PROPOSALS</Typography><Icon hFlip={true} width={25} height={25} icon="ic:round-reply" color='#2683F6'/></Box>
+        <Box sx={{cursor:'pointer'}} display='flex' onClick={() => router.push("/proposals")} alignItems='center'><Typography color="#2683F6" fontWeight={600}>PROPOSALS</Typography><Icon hFlip={true} width={25} height={25} icon="ic:round-reply" color='#2683F6'/></Box>
       </Grid>
       <Grid item container sx={{ gap: { xs: 3, md: 0 } }}>
         <Grid
@@ -165,7 +165,7 @@ const Home = () => {
               </Grid>
             </Grid>
             <Grid container width='100%' justifyContent='center' mt={1} alignItems='end'>
-              <Button onClick={() => router.push('/new/withdraw')} variant="contained" sx={{ backgroundColor: '#041431', fontSize: 20, borderRadius: 5, width: { md: '175px', xs: '100%' } }} size='middle'>WITHDRAW</Button>
+              <Button onClick={() => router.push('/withdraw')} variant="contained" sx={{ backgroundColor: '#041431', fontSize: 20, borderRadius: 5, width: { md: '175px', xs: '100%' } }} size='middle'>WITHDRAW</Button>
             </Grid>
           </Grid>
 
@@ -214,7 +214,7 @@ const Home = () => {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button onClick={() => router.push('/new/deposit')} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#2683F6', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
+              <Button onClick={() => router.push('/deposit')} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#2683F6', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
                 DEPOSIT LP
               </Button>
             </Grid>
@@ -224,7 +224,7 @@ const Home = () => {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button onClick = {() => router.push("/new/distribute")} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#041431', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
+              <Button onClick = {() => router.push("/distribute")} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#041431', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
                 DISTRIBUTE FGOL
               </Button>
             </Grid>

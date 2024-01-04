@@ -50,6 +50,8 @@ export const Web3Provider = ({ children }) => {
   const [isFetchingHomeData, setIsFetchingHomeData] = React.useState(false);
   const [fgolBalanceEth, setFGOLBalanceEth] = React.useState(null);
 
+  const [totalMemberBalance, setTotalMemberBalance] = React.useState(null);
+ 
   /**
    * 
    * @param {*} _id 
@@ -69,6 +71,8 @@ export const Web3Provider = ({ children }) => {
       const memberProgressForProposal = await _contract.methods.getMemberProgressForProposal(_id).call();
 
       const capitalProgressForProposal = await _contract.methods.getCapitalProgressForProposal(_id).call();
+
+
 
       if ( proposal.proposer == '0x0000000000000000000000000000000000000000' ) {
         return resolve(null);
@@ -118,6 +122,8 @@ export const Web3Provider = ({ children }) => {
       const tempLPTokenContract = new web3.eth.Contract( LPTokenABI, addressOfLPToken );
       const tempFGOLTokenContract = new web3.eth.Contract( FGOLTokenABI, addressOfFGOLToken );
 
+
+
       try {
         const isMember_ = await tempBlockumDAOContract.methods.isMember(_walletAddress).call();
 
@@ -141,8 +147,12 @@ export const Web3Provider = ({ children }) => {
 
       const tempFGOLBalance = await tempFGOLTokenContract.methods.balanceOf( _walletAddress ).call();
       const fgolBalanceEth = web3.utils.fromWei( tempFGOLBalance, 'ether' );
-      setFGOLBalanceEth(fgolBalanceEth)
+      setFGOLBalanceEth(fgolBalanceEth);
 
+      const tempMemberBalance = await tempBlockumDAOContract.methods.totalMemberBalance( _walletAddress ).call();
+      const _totalMemberBalance = web3.utils.fromWei( tempDepositedLpTokenWei, 'ether' );
+      setTotalMemberBalance(_totalMemberBalance);
+      
       
       const tempDepositedLpTokenWei = await tempBlockumVaultContract.methods.getMemberBalance( _walletAddress ).call();
       const lpDepositedTokenEth = web3.utils.fromWei( tempDepositedLpTokenWei, 'ether' );

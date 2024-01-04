@@ -59,13 +59,13 @@ function index() {
   const router = useRouter();
 
   return (
-    <Grid container paddingX={{ xs:3, md: 10 }} paddingY={10} sx={{backgroundColor: 'rgb(11, 0, 26)',}}>
+    <Grid container paddingX={{ xs:3, md: 10 }} sx={{backgroundColor: 'rgb(11, 0, 26)', minHeight:'100vh'}}>
       <Grid container alignItems='center' justifyContent='space-between' gap={{ xs:3, md:0 }}>
         <Box sx={{cursor:'pinter'}} textAlign='center' width={{ xs:'100%', md:'auto' }}>
           <img src='/images/BlockumDAOLogo.png' width={270} alt=""/>
         </Box>
         <Box display='flex' flexDirection={{ xs:'column', md:'row' }} gap={{ xs:3, md:0 }} width={{xs:'100%', md:'auto'}} maxWidth={{ xs: 'auto', md: 500 }} flexGrow={1} justifyContent='space-around'>
-          <Box sx={{cursor:'pointer'}} onClick={() => router.push("/new/home")} textAlign='center' width={{ xs:'100%', md:'auto' }} xs={12} fontSize='1.5rem' fontWeight={900} color='white'>HOME</Box>
+          <Box sx={{cursor:'pointer'}} onClick={() => router.push("/home")} textAlign='center' width={{ xs:'100%', md:'auto' }} xs={12} fontSize='1.5rem' fontWeight={900} color='white'>HOME</Box>
           <Box sx={{cursor:'pointer'}} textAlign='center' width={{ xs:'100%', md:'auto' }} xs={12} fontSize='1.5rem' fontWeight={900} color='white'>ABOUT US</Box>
           <Box sx={{cursor:'pointer'}} textAlign='center' width={{ xs:'100%', md:'auto' }} xs={12} fontSize='1.5rem' fontWeight={900} color='white'>FAQ</Box>
         </Box>

@@ -4,41 +4,23 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React, { useEffect } from 'react'
-import TextField from '../../../src/components/TextField';
+import TextField from '../src/components/TextField';
 
-import { useRouter } from 'next/router';
-import useWeb3 from '../../../src/hooks/useWeb3';
-import useNotification from '../../../src/hooks/useNotification';
+import { useRouter, useSearchParams } from 'next/router';
+import useWeb3 from '../src/hooks/useWeb3';
+import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
-import useSpinner from '../../../src/hooks/useSpinner';
+import useSpinner from '../src/hooks/useSpinner';
 import { useDispatch } from 'react-redux';
+
 
 const SetPeriod = (props) => {
 
-  const { asPath, pathname } = useRouter();
-
-
   const {
-    _web3,
-    connectMetaMask,
     walletAddress,
-    isMember,
-    BlockumVaultContract,
-    LPTokenContract,
-    FGOLTokenContract,
-    FGOLDistributionContract,
-    addressOfBlockumVault,
-    addressOfFGOLDistribution,
-    updateWallet,
-    lpTokenEth,
-    lpDepositedTokenEth,
-    isConnected
-
+    BlockumDAOContract,
+    updateProposalById
   } = useWeb3();
-
-  useEffect(() => {
-    console.log(asPath)
-  }, [])
 
   const { showNotification } = useNotification();
   const { openSpin, closeSpin } = useSpinner();
@@ -46,12 +28,10 @@ const SetPeriod = (props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [value, setValue] = React.useState(0);
-  const [isValidate, setIsValidate] = React.useState(false);
-
   const [days, setDays] = React.useState("0");
   const [hours, setHours] = React.useState("0");
   const [minutes, setMinutes] = React.useState("0");
+  const [proposalId, setProposalId] = React.useState("");
 
   const handleDaysChange = (e) => {
     const { value } = e.target;
@@ -61,6 +41,23 @@ const SetPeriod = (props) => {
       setDays( value );
     }
   }
+
+  useEffect(() => {
+    let { asPath } = router;
+    let search = asPath.split("?")[1];
+
+    if( !search ) {
+      return router.push("/proposals");
+    }
+ 
+    const params = search.split("=");
+
+    if ( params.length !== 2 || params[0] !== "proposalId" ) {
+      return router.push("/proposals");
+    }
+
+    setProposalId(params[1]);
+  }, [router.asPath])
 
   const handleHoursChange = (e) => {
     const { value } = e.target;
@@ -97,49 +94,23 @@ const SetPeriod = (props) => {
       setIsLoading(true);
       openSpin(`Setting proposal period`);
 
-      console.log(days, hours, minutes)
-      // await BlockumDAOContract.methods.setVotingParametersForProposal(
-      //   createdProposalId,
-      //   values.days,
-      //   values.hours,
-      //   values.minutes
-      // )
-      // .send({
-      //   from: walletAddress,
-      // });
+      await BlockumDAOContract.methods.setVotingParametersForProposal(
+        proposalId,
+        days,
+        hours,
+        minutes
+      ).send( { from: walletAddress } );
 
-      // const depositValueWei = _web3.utils.toWei(value, 'ether');
-      // await LPTokenContract.methods
-      //   .approve(addressOfBlockumVault, depositValueWei)
-      //   .send({ from: walletAddress });
       
-      // showNotification("Deposit Approved.", "success");
-      
-      // await BlockumVaultContract.methods.deposit(depositValueWei).send({
-      //   from: walletAddress,
-      // });
-      
-      // showNotification("Deposit Success.", "success");
-
-      // const response = await axios.post('/blockum-vault/deposit', {
-      //   walletAddress: walletAddress,
-      //   amount: value,
-      //   created: new Date(),
-      //   type: true
-      // });
-
-      // dispatch({
-      //   type: ADD_DEPOSIT,
-      //   payload: response.data,
-      // });
-
-      await updateWallet();
-      router.push("/new/home");
+      showNotification("Setting proposal period success", "success");
+      closeSpin();
+      updateProposalById(proposalId);
+      router.push("/proposals");
+      // await updateWallet();
     } catch (error) {
       console.log(error);
-      showNotification("Deposit failed.", "error");
+      showNotification("Period set failed", "error");
     } finally {
-      setValue(0);
       setIsLoading(false);
       closeSpin();
     }
@@ -148,7 +119,8 @@ const SetPeriod = (props) => {
 
   return (
     <Box backgroundColor='#041431' position='fixed' top={0} left={0} right={0} bottom={0} sx={{overflowY:'auto'}}>
-      <Box px={{ xs:3, sm:10 }} backgroundColor='#1C1C39' maxWidth={550} pt={10} minHeight='100vh' pb={4} margin='auto'>
+      <Box px={{ xs:3, sm:10 }} position='relative' backgroundColor='#1C1C39' maxWidth={550} pt={10} minHeight='100vh' pb={4} margin='auto'>
+        <Box position='absolute' top={15} right={15} sx={{cursor:'pointer', '&:hover':{opacity:0.7}}}><Icon onClick={() => router.push("/proposals")} icon="mingcute:close-fill" width={30} color="white" /></Box>
         <Grid item container justifyContent='center' gap={1}>
           <img src='/icons/logo.png' width={50}/>
           <Typography color='white' fontSize={25} fontWeight={600}>BLOCKUM</Typography>
