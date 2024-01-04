@@ -56,6 +56,9 @@ const Home = () => {
   };
 
 
+  /**
+   * function for claim
+   */
   const handleClaim = async () => {
     try {
       openSpin("Claiming FGOL tokens");
