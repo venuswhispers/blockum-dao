@@ -122,8 +122,6 @@ export const Web3Provider = ({ children }) => {
       const tempLPTokenContract = new web3.eth.Contract( LPTokenABI, addressOfLPToken );
       const tempFGOLTokenContract = new web3.eth.Contract( FGOLTokenABI, addressOfFGOLToken );
 
-
-
       try {
         const isMember_ = await tempBlockumDAOContract.methods.isMember(_walletAddress).call();
 
@@ -150,19 +148,20 @@ export const Web3Provider = ({ children }) => {
       setFGOLBalanceEth(fgolBalanceEth);
 
       const tempMemberBalance = await tempBlockumDAOContract.methods.totalMemberBalance( _walletAddress ).call();
-      const _totalMemberBalance = web3.utils.fromWei( tempDepositedLpTokenWei, 'ether' );
+      const _totalMemberBalance = web3.utils.fromWei( tempMemberBalance, 'ether' );
       setTotalMemberBalance(_totalMemberBalance);
       
       
       const tempDepositedLpTokenWei = await tempBlockumVaultContract.methods.getMemberBalance( _walletAddress ).call();
       const lpDepositedTokenEth = web3.utils.fromWei( tempDepositedLpTokenWei, 'ether' );
 
-
+      openSpin("Loading Proposals");
       //number of proposals
       totalNumberOfProposal = await tempBlockumDAOContract.methods.getTotalProposals().call();
 
       const currentProposalCreationFeeWei = await tempFGOLDistributionContract.methods.proposalCreationFee().call();
       const currentProposalCreationFee = web3.utils.fromWei( currentProposalCreationFeeWei, 'ether' );
+
 
       let _proposals = [];
       for (let i = 0; i < totalNumberOfProposal; i++) {
