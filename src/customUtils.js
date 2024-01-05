@@ -57,10 +57,10 @@ export const _timestampToDateForVotingProposal = (timestamp) => {
   let seconds = date.getSeconds();
 
   month = month > 10 ? month : "0" + month;
-  day = day > 10 ? day : "0" + day;
-  hours = hours > 10 ? hours : "0" + hours;
-  minutes = minutes > 10 ? minutes : "0" + minutes;
-  seconds = seconds > 10 ? seconds : "0" + seconds;
+  day = day >= 10 ? day : "0" + day;
+  hours = hours >= 10 ? hours : "0" + hours;
+  minutes = minutes >= 10 ? minutes : "0" + minutes;
+  seconds = seconds >= 10 ? seconds : "0" + seconds;
 
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;

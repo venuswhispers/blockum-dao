@@ -340,7 +340,7 @@ export const Web3Provider = ({ children }) => {
 
       console.log("here accounts", window.ethereum._state.accounts, window.ethereum._state);
 
-      if(window.ethereum._state.accounts.length > 0){
+      if( !window.ethereum._state.accounts || window.ethereum._state.accounts.length > 0){
         await connectMetaMask(web3);
       }
       getHeaderData();
