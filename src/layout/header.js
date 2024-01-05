@@ -208,10 +208,13 @@ const Header = () => {
           <Grid item sx={{cursor:'pointer'}}>
             <img src='/icons/logo.png' width={50} onClick={() => router.push("/")}/>
           </Grid>
-          <Grid item container flexDirection='column' xs='auto'>
-            <Typography fontSize={22} color='white' fontWeight={600} noWrap sx={{maxWidth:'200px'}}>{ walletAddress && _truncateText(walletAddress) }</Typography>
-            <Typography fontSize={22} marginTop={-1} color='white' fontWeight={600} >Member</Typography>
-          </Grid>
+          {
+            walletAddress && 
+            <Grid item container flexDirection='column' xs='auto'>
+              <Typography fontSize={22} color='white' fontWeight={600} noWrap sx={{maxWidth:'200px'}}>{ _truncateText(walletAddress) }</Typography>
+              <Typography fontSize={22} marginTop={-1} color='white' fontWeight={600} >Member</Typography>
+            </Grid>
+          }
         </Grid>
 
         <Grid item xs='auto' alignItems='center' sx={{display:{xs:'block',sm:'none'}}}>

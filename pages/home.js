@@ -84,16 +84,18 @@ const Home = () => {
       closeSpin();
     }
   };
-
-  const handleBuyFGOLClick = () => {
-    window.open('https://www.sushi.com/swap?chainId=137&token0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&token1=0x700481409de3f632F61a2AC9BFd76138357714da&swapAmount=1', '_blank');
-  }
   
   /**
    * open new window and go to there
    * @param {*} url 
   */
+  const _gotoURL = (url) => {
+    router.push(url)
+    // window.open(url, '_blank');
+  }
+
   const _gotoBlank = (url) => {
+    // window.open(url);
     window.open(url, '_blank');
   }
 
@@ -236,7 +238,7 @@ const Home = () => {
         >
           <Grid container rowSpacing={1} columnSpacing={2}>
             <Grid item xs={12} sm={6}>
-              <Button onClick={handleBuyFGOLClick} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#2683F6', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
+              <Button onClick={() => _gotoURL('https://app.1inch.io/#/137/simple/swap/amWETH/FGOL')} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#2683F6', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
                 BUY FGOL
               </Button>
             </Grid>
@@ -246,7 +248,7 @@ const Home = () => {
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button onClick={handleBuyFGOLClick} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#041431', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
+              <Button onClick={() => _gotoURL('https://www.sushi.com/pool/137:0xcc2873f0e4f56f3ca8bc3d6d3cd0b1328816ce5f')} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#041431', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
                 STAKING FGOL
               </Button>
             </Grid>

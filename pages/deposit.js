@@ -116,8 +116,10 @@ const Deposit = () => {
     }
   }
 
-  const handleBuyFGOLClick = () => {
-    window.open('https://www.sushi.com/swap?chainId=137&token0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&token1=0x700481409de3f632F61a2AC9BFd76138357714da&swapAmount=1', '_blank');
+  const _gotoURL = (url) => {
+    // window.open(url, '_blank');
+    // window.open(url);
+    router.push(url)
   }
 
   
@@ -186,8 +188,8 @@ const Deposit = () => {
           To get LP you need to stake FGOL:
         </Typography>
         <Grid container justifyContent='space-between' gap={1}>
-          <Button onClick={handleBuyFGOLClick} variant="contained" sx={{borderRadius:5, fontSize:'17px!important', backgroundColor:'#2683F6!important', width:{xs:'100%', sm:'170px'}}} size='small'>BUY FGOL</Button>
-          <Button onClick={handleBuyFGOLClick} variant="contained" sx={{borderRadius:5, fontSize:'17px!important', backgroundColor:'#041431!important', width:{xs:'100%', sm:'170px'}}} size='small'>STAKING FGOL</Button>
+          <Button onClick={() => _gotoURL('https://app.1inch.io/#/137/simple/swap/amWETH/FGOL')} variant="contained" sx={{borderRadius:5, fontSize:'17px!important', backgroundColor:'#2683F6!important', width:{xs:'100%', sm:'170px'}}} size='small'>BUY FGOL</Button>
+          <Button onClick={() => _gotoURL('https://www.sushi.com/pool/137:0xcc2873f0e4f56f3ca8bc3d6d3cd0b1328816ce5f')} variant="contained" sx={{borderRadius:5, fontSize:'17px!important', backgroundColor:'#041431!important', width:{xs:'100%', sm:'170px'}}} size='small'>STAKING FGOL</Button>
         </Grid>
       </Box>
       

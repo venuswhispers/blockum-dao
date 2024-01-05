@@ -45,6 +45,9 @@ const Withdraw = () => {
   const [isValidate, setIsValidate] = React.useState(false);
   const [isBegin, setIsBegin] = React.useState(false);
 
+  const [vestingDuration, setVestingDuration] = React.useState("00days 00hrs 00mins 00secs");
+  const [earlyWithdrawalFee, setEarlyWidthdrawalFee] = React.useState(0);
+
   const { deposits, distributes } = useSelector((state) => state.history);
   /**
    * set the max LP token values
@@ -125,6 +128,32 @@ const Withdraw = () => {
     setIsBegin(true);
   }, [isConnected]);
 
+  React.useEffect(() => {
+
+    async function initialFetch () {
+      let _vestingDuration = await BlockumVaultContract.methods.vestingDuration().call();
+      let _days = Math.floor( _vestingDuration / (24*3600) );
+      _vestingDuration %= ( 24*3600 );
+      let _hours = Math.floor( _vestingDuration / 3600 );
+      _vestingDuration %= 3600;
+      let _minutes = Math.floor( _vestingDuration / 60 );
+      let _seconds = _vestingDuration % 60;
+
+      _days = _days >= 10 ? _days : `0${_days}`;
+      _hours = _hours >= 10 ? _hours : `0${_hours}`;
+      _minutes = _minutes >= 10 ? _minutes : `0${_minutes}`;
+      _seconds = _seconds >= 10 ? _seconds : `0${_seconds}`;
+      setVestingDuration(`${_days}days ${_hours}hrs ${_minutes}mins ${_seconds}secs`);
+
+      let _earlyWithdrawalFee = await BlockumVaultContract.methods.earlyWithdrawalFee().call();
+      setEarlyWidthdrawalFee(_earlyWithdrawalFee);
+    }
+
+    if ( BlockumVaultContract ) {
+      initialFetch();
+    }
+  }, [ BlockumVaultContract ])
+
   return (
     <Box backgroundColor='#041431' position='fixed' top={0} left={0} right={0} bottom={0} sx={{overflowY:'auto'}}>
       <Box px={{ xs:3, sm:10 }} position='relative' backgroundColor='#1C1C39' maxWidth={550} pt={10} minHeight='100vh' pb={4} margin='auto'>
@@ -157,10 +186,10 @@ const Withdraw = () => {
           Assets: LP {lpTokenEth && Number(lpDepositedTokenEth).toFixed(2)}
         </Typography>
         <Typography width='100%' color='white' fontSize='0.8rem' mt={1}>
-          Vesting Duration - Remaining time: 00days 00hours
+          Vesting Duration - Remaining time: { vestingDuration }
         </Typography>
         <Typography width='100%' color='white' fontSize='1rem' my={1}>
-          Fee: 10%
+          Fee: { vestingDuration === "00days 00hrs 00mins 00secs" ? "0" : earlyWithdrawalFee }%
         </Typography>
         <Box width='100%'>
           <Button onClick={handleWidthDraw} fullWidth variant="contained" sx={{borderRadius:5, fontSize:'17px!important', backgroundColor:'#041431!important'}} size='small'>Withdraw</Button>
