@@ -6,12 +6,35 @@ import Typography from '@mui/material/Typography';
 import React from 'react'
 import TextField from '../src/components/TextField';
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 import { useRouter } from 'next/router';
 import useWeb3 from '../src/hooks/useWeb3';
 import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
 import useSpinner from '../src/hooks/useSpinner';
 import { useDispatch, useSelector } from 'react-redux';
+
+const _SECTORS = [ 
+  "Health and Pharmaceuticals",
+  "Biotechnology",
+  "Agrobusiness",
+  "Sustainable Energy",
+  "Artificial Intelligence",
+  "Internet of Things",
+  "Digital Commerce",
+  "Smart Transportation",
+  "Cybersecurity",
+  "Virtual Reality",
+  "Blockchain",
+  "Robotics",
+  "Sports",
+  "Wellness",
+  "Information Technology" 
+]
 
 const Proposal = () => {
 
@@ -48,9 +71,10 @@ const Proposal = () => {
   const [ title, setTitle ] = React.useState('');
   const [ description, setDescription ] = React.useState("");
   const [ presentationLink, setPresentationLink ] = React.useState("");
-  const [ sector, setSector ] = React.useState("Argo");
+  const [ sector, setSector ] = React.useState(_SECTORS[0]);
 
   const [createdProposalId, setCreatedProposalId] = React.useState(); 
+
 
   const [ isBegin, setIsBegin ] = React.useState(false);
 
@@ -159,6 +183,48 @@ const Proposal = () => {
             placeholder="AI Technology Startup"
             helperText={(title.length === 0 && isValidate) ? "Input title for proposal": ''}
           />
+        </Box>
+
+        <Box width="100%" mt={3}>
+          <FormControl fullWidth 
+            sx={{
+              "& .MuiSvgIcon-root": {
+                fill: "white",
+              }
+            }}
+          >
+            
+            <InputLabel
+              id="demo-controlled-open-select-label"
+              sx={{color: "white!important"}}
+            >
+              Proposal Sector
+            </InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              sx={{
+                color: "white",
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "white",
+                  borderRadius: 1
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": { //not working
+                  borderColor: "white",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": { //not working
+                  borderColor: "white",
+                },
+              }}
+              value={sector}
+              label="Proposal Sector"
+              onChange={e => setSector(e.target.value)}
+            >
+            { 
+              _SECTORS.map(item => <MenuItem value={item}>{ item }</MenuItem>)
+            } 
+            </Select>
+          </FormControl>
         </Box>
 
         <Box width='100%' mt={3}>
