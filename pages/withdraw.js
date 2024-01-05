@@ -31,7 +31,8 @@ const Withdraw = () => {
     updateWallet,
     lpTokenEth,
     lpDepositedTokenEth,
-    isConnected
+    isConnected,
+    _init
   } = useWeb3();
 
   const { showNotification } = useNotification();
@@ -42,6 +43,7 @@ const Withdraw = () => {
 
   const [value, setValue] = React.useState(0);
   const [isValidate, setIsValidate] = React.useState(false);
+  const [isBegin, setIsBegin] = React.useState(false);
 
 
   /**
@@ -103,6 +105,25 @@ const Withdraw = () => {
       closeSpin();
     }
   }
+
+  
+  const _initialize = async() => {
+    try {
+      await _init();
+    } catch ( err ) {
+      console.log(err)
+    }
+  }
+
+  React.useEffect(() => {
+
+    if ( !isBegin && !isConnected && deposits.length === 0 ) {
+      console.log("...................")
+      _initialize();
+    }
+
+    setIsBegin(true);
+  }, [isConnected]);
 
   return (
     <Box backgroundColor='#041431' position='fixed' top={0} left={0} right={0} bottom={0} sx={{overflowY:'auto'}}>

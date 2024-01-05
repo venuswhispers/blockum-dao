@@ -31,7 +31,8 @@ const Proposal = () => {
     lpTokenEth,
     lpDepositedTokenEth,
     isConnected,
-    addProposal
+    addProposal,
+    _init
 
   } = useWeb3();
 
@@ -50,6 +51,8 @@ const Proposal = () => {
   const [ sector, setSector ] = React.useState("Argo");
 
   const [createdProposalId, setCreatedProposalId] = React.useState(); 
+
+  const [ isBegin, setIsBegin ] = React.useState(false);
 
   const gotoHelp = () => {
     window.open("https://blockumdao.org/newproposal", '_blank');
@@ -103,7 +106,26 @@ const Proposal = () => {
       closeSpin();
       router.push(`/setperiod?proposalId=${createdProposalId}`);
     }
-  }, [createdProposalId])
+  }, [createdProposalId]);
+
+  
+  const _initialize = async() => {
+    try {
+      await _init();
+    } catch ( err ) {
+      console.log(err)
+    }
+  }
+
+  React.useEffect(() => {
+
+    if ( !isBegin && !isConnected && deposits.length === 0 ) {
+      console.log("...................")
+      _initialize();
+    }
+
+    setIsBegin(true);
+  }, [isConnected]);
 
   return (
     <Box backgroundColor='#041431' position='fixed' top={0} left={0} right={0} bottom={0} sx={{overflowY:'auto'}}>

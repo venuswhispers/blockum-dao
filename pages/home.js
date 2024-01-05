@@ -19,7 +19,8 @@ const Home = () => {
   const router = useRouter();
   const { showNotification } = useNotification();
   const { openSpin, closeSpin } = useSpinner();
-  const [ showConfirmModal,  setShowConfirmModal ] = React.useState(false)
+  const [ showConfirmModal,  setShowConfirmModal ] = React.useState(false);
+  const [ isBegin, setIsBegin ] = React.useState(false);
 
   const {
     _web3,
@@ -27,6 +28,7 @@ const Home = () => {
     fgolTokenEth,
     walletAddress,
     proposals,
+    _init,
     FGOLDistributionContract,
     BlockumDAOContract,
     currentProposalCreationFee,
@@ -95,15 +97,23 @@ const Home = () => {
     window.open(url, '_blank');
   }
 
+  const _initialize = async() => {
+    try {
+      await _init();
+    } catch ( err ) {
+      console.log(err)
+    }
+  }
 
+  React.useEffect(() => {
 
-  // React.useEffect(() => {
+    if ( !isBegin && !isConnected && deposits.length === 0 ) {
+      console.log("...................")
+      _initialize();
+    }
 
-  //   if (!isConnected || deposits.length > 0) {
-  //     return;
-  //   }
-  //   init();
-  // }, [isConnected]);
+    setIsBegin(true);
+  }, [isConnected]);
 
   const _renderDepositHistoryItem = (data, i) => (
     <Grid key={`deposit_history_${i}`} fontSize={{ xs: 14, sm: 15 }} mt={1} color='black' container backgroundColor='#E6E6E6' borderRadius={3} padding={1} justifyContent='space-between'>

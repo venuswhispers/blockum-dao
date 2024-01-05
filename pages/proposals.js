@@ -15,6 +15,8 @@ import { _calcRemainTime } from '../src/customUtils';
 
 const Proposals = () => {
 
+  const [ isBegin, setIsBegin ] = React.useState(false);
+
   const router = useRouter();
   /**
    * import variables from web3 context
@@ -24,7 +26,8 @@ const Proposals = () => {
       proposals,
       BlockumDAOContract,
       updateProposalById,
-      removeProposal
+      removeProposal,
+      _init
     } = useWeb3();
 
 
@@ -145,6 +148,25 @@ const Proposals = () => {
     }
 
   }
+
+  
+  const _initialize = async() => {
+    try {
+      await _init();
+    } catch ( err ) {
+      console.log(err)
+    }
+  }
+
+  React.useEffect(() => {
+
+    if ( !isBegin && !isConnected && deposits.length === 0 ) {
+      console.log("...................")
+      _initialize();
+    }
+
+    setIsBegin(true);
+  }, [isConnected]);
 
 
   const _renderItem = (data) => {

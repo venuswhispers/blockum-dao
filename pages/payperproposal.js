@@ -37,21 +37,23 @@ const PayPerProposal = () => {
     lpDepositedTokenEth,
     isConnected,
     fgolTokenEth,
-    fgolBalanceEth
+    fgolBalanceEth,
+    _init
 
   } = useWeb3();
   
   const { showNotification } = useNotification();
   const { openSpin, closeSpin } = useSpinner();
-  const dispatch = useDispatch();
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [ isBegin, setIsBegin ] = React.useState(false);
   
   const [value, setValue] = React.useState(0);
   const [isValidate, setIsValidate] = React.useState(false);
-
+  
   const [isStart, setIsStart] = React.useState(true);
-
+  
+  const dispatch = useDispatch();
   /**
    * if pay is exists, navigate to /proposal
    */
@@ -120,6 +122,24 @@ const PayPerProposal = () => {
       closeSpin();
     }
   }
+
+  const _initialize = async() => {
+    try {
+      await _init();
+    } catch ( err ) {
+      console.log(err)
+    }
+  }
+
+  React.useEffect(() => {
+
+    if ( !isBegin && !isConnected && deposits.length === 0 ) {
+      console.log("...................")
+      _initialize();
+    }
+
+    setIsBegin(true);
+  }, [isConnected]);
 
 
 

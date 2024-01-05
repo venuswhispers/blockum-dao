@@ -104,7 +104,7 @@ export const Web3Provider = ({ children }) => {
     openSpin("Connecting to Wallet");
     
 
-    let totalNumberOfProposal = 0;
+    // let totalNumberOfProposal = 0;
     let temp = 0;
     try {
       await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -116,14 +116,14 @@ export const Web3Provider = ({ children }) => {
 
       openSpin("Loading contracts");
       //contracts
-      const tempBlockumVaultContract = new web3.eth.Contract( BlockumVaultABI, addressOfBlockumVault );
-      const tempFGOLDistributionContract = new web3.eth.Contract( FGOLDistributionABI, addressOfFGOLDistribution );
-      const tempBlockumDAOContract = new web3.eth.Contract( BlockumDAOABI, addressOfBlockumDAO );
-      const tempLPTokenContract = new web3.eth.Contract( LPTokenABI, addressOfLPToken );
-      const tempFGOLTokenContract = new web3.eth.Contract( FGOLTokenABI, addressOfFGOLToken );
+      const _BlockumVaultContract = new web3.eth.Contract( BlockumVaultABI, addressOfBlockumVault );
+      const _FGOLDistributionContract = new web3.eth.Contract( FGOLDistributionABI, addressOfFGOLDistribution );
+      const _BlockumDAOContract = new web3.eth.Contract( BlockumDAOABI, addressOfBlockumDAO );
+      const _LPTokenContract = new web3.eth.Contract( LPTokenABI, addressOfLPToken );
+      const _FGOLTokenContract = new web3.eth.Contract( FGOLTokenABI, addressOfFGOLToken );
 
       try {
-        const isMember_ = await tempBlockumDAOContract.methods.isMember(_walletAddress).call();
+        const isMember_ = await _BlockumDAOContract.methods.isMember(_walletAddress).call();
 
         if (isMember_) {
           setIsMember(true);
@@ -137,51 +137,54 @@ export const Web3Provider = ({ children }) => {
       }
 
       openSpin("Loading data from chain");
-      const tempLpTokenWei = await tempLPTokenContract.methods.balanceOf( _walletAddress ).call();
-      const lpTokenEth = web3.utils.fromWei( tempLpTokenWei, 'ether' );
+      const _lpTokenWei = await _LPTokenContract.methods.balanceOf( _walletAddress ).call();
+      const _lpTokenEth = web3.utils.fromWei( _lpTokenWei, 'ether' );
 
-      const tempFGOLTokenWei = await tempFGOLDistributionContract.methods.pendingClaims( _walletAddress ).call();
-      const fgolTokenEth = web3.utils.fromWei( tempFGOLTokenWei, 'ether' );
+      const _FGOLTokenWei = await _FGOLDistributionContract.methods.pendingClaims( _walletAddress ).call();
+      const _fgolTokenEth = web3.utils.fromWei( _FGOLTokenWei, 'ether' );
 
-      const tempFGOLBalance = await tempFGOLTokenContract.methods.balanceOf( _walletAddress ).call();
-      const fgolBalanceEth = web3.utils.fromWei( tempFGOLBalance, 'ether' );
-      setFGOLBalanceEth(fgolBalanceEth);
-
-      const tempMemberBalance = await tempBlockumDAOContract.methods.totalMemberBalance( _walletAddress ).call();
-      const _totalMemberBalance = web3.utils.fromWei( tempMemberBalance, 'ether' );
-      setTotalMemberBalance(_totalMemberBalance);
+      const _FGOLBalance = await _FGOLTokenContract.methods.balanceOf( _walletAddress ).call();
+      const _fgolBalanceEth = web3.utils.fromWei( _FGOLBalance, 'ether' );
+      
+      const _tempTotalMemberBalance = await _BlockumDAOContract.methods.totalMemberBalance( _walletAddress ).call();
+      const _totalMemberBalance = web3.utils.fromWei( _tempTotalMemberBalance, 'ether' );
       
       
-      const tempDepositedLpTokenWei = await tempBlockumVaultContract.methods.getMemberBalance( _walletAddress ).call();
-      const lpDepositedTokenEth = web3.utils.fromWei( tempDepositedLpTokenWei, 'ether' );
-
+      const _tempDepositedLpTokenWei = await _BlockumVaultContract.methods.getMemberBalance( _walletAddress ).call();
+      const _lpDepositedTokenEth = web3.utils.fromWei( _tempDepositedLpTokenWei, 'ether' );
+      
       openSpin("Loading Proposals");
+      
+      const _currentProposalCreationFeeWei = await _FGOLDistributionContract.methods.proposalCreationFee().call();
+      const _currentProposalCreationFee = web3.utils.fromWei( _currentProposalCreationFeeWei, 'ether' );
+      
       //number of proposals
-      totalNumberOfProposal = await tempBlockumDAOContract.methods.getTotalProposals().call();
-
-      const currentProposalCreationFeeWei = await tempFGOLDistributionContract.methods.proposalCreationFee().call();
-      const currentProposalCreationFee = web3.utils.fromWei( currentProposalCreationFeeWei, 'ether' );
-
-
+      const _totalNumberOfProposal = await _BlockumDAOContract.methods.getTotalProposals().call();
+      
       let _proposals = [];
-      for (let i = 0; i < totalNumberOfProposal; i++) {
-        const _proposal = await getProposalDetailsById(i, web3, tempBlockumDAOContract, _walletAddress);
+      console.log(_totalNumberOfProposal)
+      for (let i = 0; i < _totalNumberOfProposal; i++) {
+        const _proposal = await getProposalDetailsById(i, web3, _BlockumDAOContract, _walletAddress);
         if ( _proposal ) {
           _proposals = [_proposal, ..._proposals];
         }
       }
-
+      
+      setTotalMemberBalance(_totalMemberBalance);
+      setFGOLBalanceEth(_fgolBalanceEth);
       setProposals(_proposals);
-      setLPTokenContract(tempLPTokenContract);
-      setFGOLTokenContract(tempFGOLTokenContract);
-      setBlockumVaultContract(tempBlockumVaultContract);
-      setFGOLDistributionContract(tempFGOLDistributionContract);
-      setBlockumDAOContract(tempBlockumDAOContract);
-      setLPTokenEth(lpTokenEth);
-      setFGOLTokenEth(fgolTokenEth);
+
+      setLPTokenContract(_LPTokenContract);
+      setFGOLTokenContract(_FGOLTokenContract);
+      setBlockumVaultContract(_BlockumVaultContract);
+      setFGOLDistributionContract(_FGOLDistributionContract);
+      setBlockumDAOContract(_BlockumDAOContract);
+
+      setLPTokenEth(_lpTokenEth);
+      setFGOLTokenEth(_fgolTokenEth);
       setWalletAddress(_walletAddress);
-      setCurrentProposalCreationFee(currentProposalCreationFee);
-      setLpDepositedTokenEth(lpDepositedTokenEth);
+      setCurrentProposalCreationFee(_currentProposalCreationFee);
+      setLpDepositedTokenEth(_lpDepositedTokenEth);
 
       setIsConnected(true);
       resolve();
@@ -261,9 +264,9 @@ export const Web3Provider = ({ children }) => {
   })
 
     /**
-   * remove proposal
-   * @returns 
-   */
+     * remove proposal
+     * @returns 
+     */
     const removeProposal = ( proposalId ) => new Promise(async(resolve, reject) => {
       try {
         let _proposals = [...proposals];
@@ -288,22 +291,24 @@ export const Web3Provider = ({ children }) => {
     }
 
     try{
-      const tempLPTokenContract = new _web3.eth.Contract( LPTokenABI, addressOfLPToken );
-      const tempFGOLDistributionContract = new _web3.eth.Contract( FGOLDistributionABI, addressOfFGOLDistribution );
-      const tempBlockumVaultContract = new _web3.eth.Contract( BlockumVaultABI, addressOfBlockumVault );
+
       
-      const tempLpTokenWei = await tempLPTokenContract.methods.balanceOf(walletAddress).call();
+      const tempLpTokenWei = await LPTokenContract.methods.balanceOf(walletAddress).call();
       const lpTokenEth = _web3.utils.fromWei(tempLpTokenWei, 'ether');
 
-      const tempFGOLTokenWei = await tempFGOLDistributionContract.methods.pendingClaims(walletAddress).call();
+      const tempFGOLTokenWei = await FGOLDistributionContract.methods.pendingClaims(walletAddress).call();
       const fgolTokenEth = _web3.utils.fromWei(tempFGOLTokenWei, 'ether');
 
-      const tempDepositedLpTokenWei = await tempBlockumVaultContract.methods.getMemberBalance(walletAddress).call();
+      const tempDepositedLpTokenWei = await BlockumVaultContract.methods.getMemberBalance(walletAddress).call();
       const lpDepositedTokenEth = _web3.utils.fromWei(tempDepositedLpTokenWei,'ether');
 
       const tempFGOLBalance = await FGOLTokenContract.methods.balanceOf(walletAddress).call();
       const fgolBalanceEth = _web3.utils.fromWei( tempFGOLBalance, 'ether' );
+
+      const tempTotalMemberBalance = await BlockumDAOContract.methods.totalMemberBalance( walletAddress ).call();
+      const _totalMemberBalance = _web3.utils.fromWei( tempTotalMemberBalance, 'ether' );
       
+      setTotalMemberBalance(_totalMemberBalance);
       setFGOLBalanceEth(fgolBalanceEth)
       setLPTokenEth(lpTokenEth);
       setFGOLTokenEth(fgolTokenEth);
@@ -321,30 +326,28 @@ export const Web3Provider = ({ children }) => {
   /**
    * init and connect wallet once it is available
    */
-  const _init = async() => {
+  const _init = () => new Promise( async (resolve, reject) => {
 
-    const web3 = new Web3(window.ethereum);
-    setWeb3(web3);
+    try {
+      const web3 = new Web3(window.ethereum);
+      setWeb3(web3);
 
-    if(!window.ethereum) {
-      window.alert('Please install MetaMask');
-      window.open('https://metamask.io/download.html', '_self');
-      return;
+      if(!window.ethereum) {
+        window.alert('Please install MetaMask');
+        window.open('https://metamask.io/download.html', '_self');
+        return;
+      }
+
+      if(window.ethereum._state.accounts.length > 0){
+        await connectMetaMask(web3);
+      }
+      getHeaderData();
+      resolve();
+    } catch (e) {
+      console.log(e);
+      reject();
     }
-
-    // if(window.ethereum._state.accounts.length > 0){
-
-    //   await connectMetaMask(web3);
-    // }
-    // getHeaderData();
-  }
-
-  /**
-   * init and connect wallet once it is available
-   */
-  useEffect(() => {
-    _init();
-  }, []);
+  })
 
   /**
    * fetch data fro /home 
@@ -412,7 +415,8 @@ export const Web3Provider = ({ children }) => {
         updateProposalById,
         addProposal,
         removeProposal,
-        totalMemberBalance
+        totalMemberBalance,
+        _init
       }}
     >
       {children}

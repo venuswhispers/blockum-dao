@@ -36,7 +36,8 @@ const Distribute = () => {
     lpDepositedTokenEth,
     isConnected,
     fgolTokenEth,
-    fgolBalanceEth
+    fgolBalanceEth,
+    _init
 
   } = useWeb3();
 
@@ -49,6 +50,7 @@ const Distribute = () => {
   
   const [value, setValue] = React.useState(0);
   const [isValidate, setIsValidate] = React.useState(false);
+  const [isBegin, setIsBegin] = React.useState(false);
   
 
   const handleBuyFGOLClick = () => {
@@ -117,6 +119,25 @@ const Distribute = () => {
       closeSpin();
     }
   }
+
+  
+  const _initialize = async() => {
+    try {
+      await _init();
+    } catch ( err ) {
+      console.log(err)
+    }
+  }
+
+  React.useEffect(() => {
+
+    if ( !isBegin && !isConnected && deposits.length === 0 ) {
+      console.log("...................")
+      _initialize();
+    }
+
+    setIsBegin(true);
+  }, [isConnected]);
 
 
 

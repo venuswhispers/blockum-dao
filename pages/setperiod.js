@@ -19,7 +19,8 @@ const SetPeriod = (props) => {
   const {
     walletAddress,
     BlockumDAOContract,
-    updateProposalById
+    updateProposalById,
+    _init
   } = useWeb3();
 
   const { showNotification } = useNotification();
@@ -28,10 +29,11 @@ const SetPeriod = (props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [days, setDays] = React.useState("0");
-  const [hours, setHours] = React.useState("0");
-  const [minutes, setMinutes] = React.useState("0");
-  const [proposalId, setProposalId] = React.useState("");
+  const [ days, setDays ] = React.useState("0");
+  const [ hours, setHours ] = React.useState("0");
+  const [ minutes, setMinutes ] = React.useState("0");
+  const [ proposalId, setProposalId ] = React.useState("");
+  const [ isBegin, setIsBegin ] = React.useState(false);
 
   const handleDaysChange = (e) => {
     const { value } = e.target;
@@ -116,6 +118,25 @@ const SetPeriod = (props) => {
     }
 
   }
+
+  
+  const _initialize = async() => {
+    try {
+      await _init();
+    } catch ( err ) {
+      console.log(err)
+    }
+  }
+
+  React.useEffect(() => {
+
+    if ( !isBegin && !isConnected && deposits.length === 0 ) {
+      console.log("...................")
+      _initialize();
+    }
+
+    setIsBegin(true);
+  }, [isConnected]);
 
   return (
     <Box backgroundColor='#041431' position='fixed' top={0} left={0} right={0} bottom={0} sx={{overflowY:'auto'}}>
