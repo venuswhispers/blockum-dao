@@ -21,8 +21,7 @@ const SetPeriod = (props) => {
     BlockumDAOContract,
     updateProposalById,
     _init,
-    isConnected,
-    deposits
+    isConnected
   } = useWeb3();
 
   const { showNotification } = useNotification();

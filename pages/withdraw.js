@@ -31,7 +31,7 @@ const Withdraw = () => {
     updateWallet,
     lpTokenEth,
     lpDepositedTokenEth,
-    isConnected
+    isConnected,
     _init
   } = useWeb3();
 
