@@ -220,7 +220,7 @@ const Proposal = () => {
               onChange={e => setSector(e.target.value)}
             >
             { 
-              _SECTORS.map(item => <MenuItem value={item}>{ item }</MenuItem>)
+              _SECTORS.map((item, idx) => <MenuItem key={`sector_${idx}`} value={item}>{ item }</MenuItem>)
             } 
             </Select>
           </FormControl>

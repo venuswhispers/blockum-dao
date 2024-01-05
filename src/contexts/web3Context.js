@@ -384,7 +384,22 @@ export const Web3Provider = ({ children }) => {
       return;
     }
     _fetchHomeData();
-  }, [walletAddress])
+  }, [walletAddress]);
+
+  
+  /**
+   * init web3 for starting
+   */
+  useEffect(() => {
+    if(!window.ethereum) {
+      window.alert('Please install MetaMask');
+      window.open('https://metamask.io/download.html', '_self');
+      return;
+    }
+
+    const _web3 = new Web3(window.ethereum);
+    setWeb3(_web3);
+  }, []);
 
   return (
     <Web3Context.Provider
