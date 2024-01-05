@@ -81,7 +81,7 @@ const Header = () => {
     const _chainId = 137;
     const _chainIdAsHex = _web3.utils.toHex(_chainId);
 
-    if ( window.ethereum.networkVersion == _chainId ) {
+    if ( window.ethereum.net_version == _chainId ) {
       setShowConfirmModal(false);
       return showNotification("Current chain is Polygon", "success")
     }
@@ -136,7 +136,7 @@ const Header = () => {
   //             '&:hover':{
   //               backgroundColor:'#04143139'
   //             },
-  //             // backgroundColor: window.ethereum.networkVersion === '5' ? '#04143139' : 'white'
+  //             // backgroundColor: window.ethereum.net_version === '5' ? '#04143139' : 'white'
   //           }} 
   //           display='flex' alignItems='center' gap={2}>
   //           <Icon width={30} height={30} icon="logos:ethereum" hFlip={true} />

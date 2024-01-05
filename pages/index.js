@@ -34,7 +34,7 @@ function index() {
     const _chainId = 137;
     const _chainIdAsHex = _web3.utils.toHex(_chainId);
 
-    if ( window.ethereum.networkVersion == _chainId ) {
+    if ( window.ethereum.net_version == _chainId ) {
       setShowConfirmModal(false);
       return showNotification("Current chain is Polygon", "success")
     }
@@ -98,7 +98,7 @@ function index() {
     }
 
 
-    if ( window.ethereum.networkVersion == 137 ) {
+    if ( window.ethereum.net_version == 137 ) {
       try {
         await connectMetaMask();
         showNotification("Connect success", "success");

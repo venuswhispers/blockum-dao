@@ -82,7 +82,7 @@ const Proposal = () => {
       closeSpin();
       const _proposalId = tx.events.ProposalCreated.returnValues.proposalId;
       await addProposal(_proposalId);
-      router.push(`/new/setperiod?proposalId=${_proposalId}`);
+      router.push(`/setperiod?proposalId=${_proposalId}`);
       
       // await updateWallet();
       // router.push("/convince");
@@ -101,7 +101,7 @@ const Proposal = () => {
   React.useEffect(() => {
     if ( createdProposalId ) {
       closeSpin();
-      router.push(`/new/setperiod?proposalId=${createdProposalId}`);
+      router.push(`/setperiod?proposalId=${createdProposalId}`);
     }
   }, [createdProposalId])
 
