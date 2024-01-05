@@ -12,7 +12,7 @@ import useWeb3 from '../src/hooks/useWeb3';
 import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
 import useSpinner from '../src/hooks/useSpinner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 import { ADD_DEPOSIT, ADD_DISTRIBUTE } from '../src/redux/action/type';
@@ -35,7 +35,6 @@ const Distribute = () => {
     lpTokenEth,
     lpDepositedTokenEth,
     isConnected,
-    deposits,
     fgolTokenEth,
     fgolBalanceEth,
     _init
@@ -53,6 +52,7 @@ const Distribute = () => {
   const [isValidate, setIsValidate] = React.useState(false);
   const [isBegin, setIsBegin] = React.useState(false);
   
+  const { deposits, distributes } = useSelector((state) => state.history);
 
   const handleBuyFGOLClick = () => {
     window.open('https://www.sushi.com/swap?chainId=137&token0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&token1=0x700481409de3f632F61a2AC9BFd76138357714da&swapAmount=1', '_blank');

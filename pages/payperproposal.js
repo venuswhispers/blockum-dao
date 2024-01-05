@@ -12,7 +12,7 @@ import useWeb3 from '../src/hooks/useWeb3';
 import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
 import useSpinner from '../src/hooks/useSpinner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 import { ADD_DEPOSIT, ADD_DISTRIBUTE } from '../src/redux/action/type';
@@ -54,6 +54,8 @@ const PayPerProposal = () => {
   const [isStart, setIsStart] = React.useState(true);
   
   const dispatch = useDispatch();
+
+  const { deposits, distributes } = useSelector((state) => state.history);
   /**
    * if pay is exists, navigate to /proposal
    */

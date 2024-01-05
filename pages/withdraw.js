@@ -11,7 +11,7 @@ import useWeb3 from '../src/hooks/useWeb3';
 import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
 import useSpinner from '../src/hooks/useSpinner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ADD_DEPOSIT } from '../src/redux/action/type';
 
@@ -31,8 +31,7 @@ const Withdraw = () => {
     updateWallet,
     lpTokenEth,
     lpDepositedTokenEth,
-    isConnected,
-    deposits,
+    isConnected
     _init
   } = useWeb3();
 
@@ -46,7 +45,7 @@ const Withdraw = () => {
   const [isValidate, setIsValidate] = React.useState(false);
   const [isBegin, setIsBegin] = React.useState(false);
 
-
+  const { deposits, distributes } = useSelector((state) => state.history);
   /**
    * set the max LP token values
    * @returns 

@@ -11,7 +11,7 @@ import useWeb3 from '../src/hooks/useWeb3';
 import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
 import useSpinner from '../src/hooks/useSpinner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Proposal = () => {
 
@@ -31,7 +31,6 @@ const Proposal = () => {
     lpTokenEth,
     lpDepositedTokenEth,
     isConnected,
-    deposits,
     addProposal,
     _init
 
@@ -54,6 +53,8 @@ const Proposal = () => {
   const [createdProposalId, setCreatedProposalId] = React.useState(); 
 
   const [ isBegin, setIsBegin ] = React.useState(false);
+
+  const { deposits, distributes } = useSelector((state) => state.history);
 
   const gotoHelp = () => {
     window.open("https://blockumdao.org/newproposal", '_blank');

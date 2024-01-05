@@ -11,7 +11,7 @@ import useWeb3 from '../src/hooks/useWeb3';
 import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
 import useSpinner from '../src/hooks/useSpinner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const SetPeriod = (props) => {
@@ -36,6 +36,8 @@ const SetPeriod = (props) => {
   const [ minutes, setMinutes ] = React.useState("0");
   const [ proposalId, setProposalId ] = React.useState("");
   const [ isBegin, setIsBegin ] = React.useState(false);
+
+  const { deposits, distributes } = useSelector((state) => state.history);
 
   const handleDaysChange = (e) => {
     const { value } = e.target;

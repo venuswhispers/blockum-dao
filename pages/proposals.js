@@ -10,6 +10,7 @@ import useNotification from '../src/hooks/useNotification';
 import useSpinner from '../src/hooks/useSpinner';
 import { useRouter } from 'next/router';
 import { _calcRemainTime } from '../src/customUtils';
+import { useSelector } from 'react-redux';
 
 
 
@@ -22,23 +23,24 @@ const Proposals = () => {
    * import variables from web3 context
    */
   const {
-      walletAddress,
-      proposals,
-      BlockumDAOContract,
-      updateProposalById,
-      removeProposal,
-      _init,
-      isConnected,
-      deposits
-    } = useWeb3();
+    walletAddress,
+    proposals,
+    BlockumDAOContract,
+    updateProposalById,
+    removeProposal,
+    _init,
+    isConnected
+  } = useWeb3();
+
+  const { deposits, distributes } = useSelector((state) => state.history);
 
 
-/**
- * calc percent for main
- * @param {*} main active votes
- * @param {*} forVotes forVotes
- * @param {*} againstVotes  againstVotes
- */
+  /**
+   * calc percent for main
+   * @param {*} main active votes
+   * @param {*} forVotes forVotes
+   * @param {*} againstVotes  againstVotes
+   */
   const _calcProgress = ( main, forVotes, againstVotes ) => {
     let mainVotes = Number(main);
     let totalVotes = Number(forVotes) + Number(againstVotes);
