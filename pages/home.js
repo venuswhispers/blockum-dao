@@ -288,7 +288,7 @@ const Home = () => {
         <Grid item container sm={12} md={6} sx={{ pl: { sm: 0, md: '4px' }, mt: { xs: 1, md: 0 } }}>
           <Grid item alignItems='start' backgroundColor="white" borderRadius={6} p={2} maxHeight={700} className='scroller' sx={{overflowY:'scroll'}}>
             <Grid container>
-              <Typography width='100%' color='black' fontSize={{ xs: 20, sm: 25 }} px={1} borderBottom='4px solid #C9C9C9'>DISTRIBUTION HISTORY:</Typography>
+              <Typography width='100%' color='black' fontSize={{ xs: 20, sm: 25 }} px={1} borderBottom='4px solid #C9C9C9'>General Distribution History:</Typography>
               <Grid container justifyContent='space-between' px={3} py={1}>
                 <Typography color='#2683F6' fontSize={{ xs: 15, sm: 20 }}>Date</Typography>
                 <Typography color='#2683F6' fontSize={{ xs: 15, sm: 20 }}>Distributor's Wallet</Typography>
