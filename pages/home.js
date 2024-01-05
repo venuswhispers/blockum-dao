@@ -19,6 +19,7 @@ const Home = () => {
   const router = useRouter();
   const { showNotification } = useNotification();
   const { openSpin, closeSpin } = useSpinner();
+  const [ showConfirmModal,  setShowConfirmModal ] = React.useState(false)
 
   const {
     _web3,
@@ -34,7 +35,8 @@ const Home = () => {
     lpDepositedTokenEth,
     isConnected,
     isFetchingHomeData,
-    updateWallet
+    updateWallet,
+    totalMemberBalance
   } = useWeb3();
 
   const dispatch = useDispatch();
@@ -156,14 +158,14 @@ const Home = () => {
                 <Typography color='white'>ALL VAULTS</Typography>
                 <Typography color='white' fontSize={20}>
                   LP {" "}
-                  {lpTokenEth && Number(lpTokenEth).toFixed(2)}
+                  {totalMemberBalance && Number(totalMemberBalance).toFixed(2)}
                 </Typography>
               </Grid>
               <Grid item xs={6} textAlign='center'>
                 <Typography color='white'>IN THIS VAULTS</Typography>
                 <Typography color='white' fontSize={20}>
                   LP {" "}
-                  {lpTokenEth && Number(lpDepositedTokenEth).toFixed(2)}
+                  {lpDepositedTokenEth && Number(lpDepositedTokenEth).toFixed(2)}
                 </Typography>
               </Grid>
             </Grid>

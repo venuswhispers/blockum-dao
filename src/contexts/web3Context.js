@@ -208,7 +208,7 @@ export const Web3Provider = ({ children }) => {
     setProposals([]);
     setIsMember(false);
     setCurrentProposalCreationFee(null);
-    setLpDepositedTokenEth([]);
+    setLpDepositedTokenEth(null);
     setIsConnected(false);
     setIsConnecting(false);
     setIsFetchingHomeData(false);
@@ -332,11 +332,11 @@ export const Web3Provider = ({ children }) => {
       return;
     }
 
-    if(window.ethereum._state.accounts.length > 0){
+    // if(window.ethereum._state.accounts.length > 0){
 
-      await connectMetaMask(web3);
-    }
-    getHeaderData();
+    //   await connectMetaMask(web3);
+    // }
+    // getHeaderData();
   }
 
   /**
@@ -411,7 +411,8 @@ export const Web3Provider = ({ children }) => {
         fgolBalanceEth,
         updateProposalById,
         addProposal,
-        removeProposal
+        removeProposal,
+        totalMemberBalance
       }}
     >
       {children}

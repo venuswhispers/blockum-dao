@@ -7,6 +7,7 @@ import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
 import useWeb3 from '../src/hooks/useWeb3';
 import useNotification from '../src/hooks/useNotification';
+import useSpinner from '../src/hooks/useSpinner';
 
 function index() {
 
@@ -14,6 +15,7 @@ function index() {
  * import variables from web3 context
  */
   const {
+    _web3,
     connectMetaMask,
     walletAddress,
     isConnecting,
@@ -21,7 +23,56 @@ function index() {
     disconnectMetaMask
   } = useWeb3();
 
+  const {openSpin, closeSpin} = useSpinner();
+
   const { showNotification } = useNotification();
+
+  const [ showConfirmModal,  setShowConfirmModal ] = React.useState(false)
+
+
+  const handleSwitchToPolygon = async() => {
+    const _chainId = 137;
+    const _chainIdAsHex = _web3.utils.toHex(_chainId);
+
+    if ( window.ethereum.networkVersion == _chainId ) {
+      setShowConfirmModal(false);
+      return showNotification("Current chain is Polygon", "success")
+    }
+    
+
+    setShowConfirmModal(false);
+
+    try {
+
+      openSpin("Switching to Polygon")
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: _chainIdAsHex }]
+      });
+      showNotification("Successfully switched to Polygon", "success");
+    } catch (err) {
+        // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        openSpin("Adding Polygon network")
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainName: 'Polygon Mainnet',
+              chainId: _chainIdAsHex,
+              nativeCurrency: { name: 'MATIC', decimals: 18, symbol: 'MATIC' },
+              rpcUrls: ['https://polygon-rpc.com/']
+            }
+          ]
+        });
+        showNotification("Successfully switched to Polygon", "success");
+      }
+    } finally {
+      closeSpin();
+    }
+
+    
+  }
 
   const _renderConnectButtonText = () => {
     if(isConnecting) {
@@ -45,7 +96,25 @@ function index() {
       handleDisconnectClick();     
       return;
     }
+
+
+    if ( window.ethereum.networkVersion == 137 ) {
+      try {
+        await connectMetaMask();
+        showNotification("Connect success", "success");
+      } catch (e) {
+        showNotification("Connect failed", "error");
+        console.log(e)
+      }
+    } else {
+      setShowConfirmModal( true )
+    }
     
+    
+  };
+
+  const _connectWallet = async() => {
+    setShowConfirmModal(false);
     try {
       await connectMetaMask();
       showNotification("Connect success", "success");
@@ -53,13 +122,41 @@ function index() {
       showNotification("Connect failed", "error");
       console.log(e)
     }
-  };
+  }
 
 
   const router = useRouter();
 
+  const _renderSwitchConfirmModal = () => {
+
+    return ( 
+      <Box zIndex={10000} position='fixed' top={0} left={0} right={0} bottom={0} display='flex' justifyContent='center' alignItems='center'>
+        <Box onClick={() => setShowConfirmModal(false)} position='fixed' top={0} left={0} right={0} bottom={0} sx={{backgroundColor: '#041431b9'}}/>
+        <Box zIndex={10000000} width={400} sx={{backgroundColor:'white'}} padding={3} borderRadius={10}>
+          <Box
+            textAlign='center' 
+            padding={1}
+            borderRadius={5}
+            sx={{ 
+              cursor: 'pointer',
+            }} 
+            display='flex' alignItems='center' gap={2}
+          >
+            <Icon height={30} className='t-cursor-pointer hover:t-opacity-[0.6]' icon="cryptocurrency-color:matic" rotate={1} />
+            <Typography>Are you agree to switch to Polygon?</Typography>
+          </Box>
+          <Grid container gap={1} justifyContent='center' mt={1}>
+            <Button onClick={handleSwitchToPolygon} variant="contained" sx={{borderRadius:4,textTransform:'none', width:100,  backgroundColor:'#2683F6!important'}} size='small'>O K</Button>
+            <Button onClick={_connectWallet}  variant="contained" sx={{borderRadius:4,textTransform:'none', width:100,  backgroundColor:'#ff22F6!important'}} size='small'>CANCEL</Button>
+          </Grid>
+        </Box>
+      </Box>
+    )
+  }
+
   return (
     <Grid container paddingX={{ xs:3, md: 10 }} sx={{backgroundColor: 'rgb(11, 0, 26)', minHeight:'100vh'}}>
+      { showConfirmModal && _renderSwitchConfirmModal() }
       <Grid container alignItems='center' justifyContent='space-between' gap={{ xs:3, md:0 }}>
         <Box sx={{cursor:'pinter'}} textAlign='center' width={{ xs:'100%', md:'auto' }}>
           <img src='/images/BlockumDAOLogo.png' width={270} alt=""/>
