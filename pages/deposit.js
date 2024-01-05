@@ -32,6 +32,7 @@ const Deposit = () => {
     lpTokenEth,
     lpDepositedTokenEth,
     isConnected,
+    deposits,
     _init
 
   } = useWeb3();

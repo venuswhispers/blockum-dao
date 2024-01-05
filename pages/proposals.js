@@ -27,7 +27,9 @@ const Proposals = () => {
       BlockumDAOContract,
       updateProposalById,
       removeProposal,
-      _init
+      _init,
+      isConnected,
+      deposits
     } = useWeb3();
 
 

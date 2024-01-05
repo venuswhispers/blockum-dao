@@ -35,6 +35,7 @@ const Distribute = () => {
     lpTokenEth,
     lpDepositedTokenEth,
     isConnected,
+    deposits,
     fgolTokenEth,
     fgolBalanceEth,
     _init

@@ -31,6 +31,7 @@ const Proposal = () => {
     lpTokenEth,
     lpDepositedTokenEth,
     isConnected,
+    deposits,
     addProposal,
     _init
 
