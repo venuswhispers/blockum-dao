@@ -193,7 +193,6 @@ const Proposal = () => {
               }
             }}
           >
-            
             <InputLabel
               id="demo-controlled-open-select-label"
               sx={{color: "white!important"}}
