@@ -168,9 +168,9 @@ const Proposals = () => {
               <Typography color='#2683F6' fontSize={15}>Created in:</Typography>
               <Typography color='black' fontSize={13}>{ _timestampToDateForVotingProposal(data.endTime) }</Typography>
               <Typography color='black' pl={1} fontSize={15} fontWeight={600} mt='8px'>Members Quorum</Typography>
-              { _renderProgress(data.memberProgressForProposal) }
+              { _renderProgress(data.memberProgressForProposal <= 100 ? data.memberProgressForProposal: 100) }
               <Typography color='black' mt={1} pl={1} fontSize={15} fontWeight={600}>Capital Quorum</Typography>
-              { _renderProgress(data.capitalProgressForProposal) }
+              { _renderProgress(data.capitalProgressForProposal <= 100 ? data.capitalProgressForProposal: 100) }
               <Typography color='black' mt={1} pl={1} fontSize={15} fontWeight={600}>Quorum Met: { data.proposalVotings.quorumMet ? "Yes" : "No" }</Typography>
             </Grid>
             <Grid item container xs={12} sm={4} md={12} lg={4} pr={{xs:0,sm:2,md:0,lg:2}} mt={{xs:3,sm:0,md:3,lg:0}} flexDirection='column'>
@@ -185,9 +185,9 @@ const Proposals = () => {
               </Grid>
               <Typography color='black' pl={1} fontSize={15} fontWeight={600} mt={1}>For Votes</Typography>
               { _renderProgress( _calcProgress( data.proposalVotings.forVotes, data.proposalVotings.forVotes, data.proposalVotings.againstVotes ) )}
-              <Typography color='black' mt={1} pl={1} fontSize={15} fontWeight={600} mt={1}>Against Votes</Typography>
+              <Typography color='black' mt={1} pl={1} fontSize={15} fontWeight={600}>Against Votes</Typography>
               { _renderProgress( _calcProgress( data.proposalVotings.againstVotes, data.proposalVotings.forVotes, data.proposalVotings.againstVotes ) )}
-              <Typography color='black' mt={1} pl={1} fontSize={15} fontWeight={600} >Total Votes: {Number(data.proposalVotings.againstVotes) / Math.pow(10, 18) + Number(data.proposalVotings.forVotes) / Math.pow(10, 18) }</Typography>
+              <Typography color='black' mt={1} pl={1} fontSize={15} fontWeight={600} >Total Votes: { (Number(data.proposalVotings.againstVotes) / Math.pow(10, 18) + Number(data.proposalVotings.forVotes) / Math.pow(10, 18)).toFixed(3) }</Typography>
             </Grid>
             <Grid item container xs={12} sm={4} md={12} lg={4} mt={{xs:3,sm:0,md:3,lg:0}} flexDirection='column'>
               <Grid container alignItems='center' justifyContent='end'>
@@ -197,35 +197,35 @@ const Proposals = () => {
               <Grid container backgroundColor='#E6E6E6' borderRadius={3} px={1}>
                 <Box sx={{borderLeft:'2px solid #2683F6'}} width='100%' py='2px' minHeight='94px' display='flex' justifyContent='start' flexDirection='column' alignItems='center'>
                 {
-                  !data.proposalVotings.funded &&                 
+                  data.proposalVotings.funded &&                 
                   <Grid container alignItems='center' flexWrap='nowrap'>
                     <Grid item ml='-6px'><Box width={10} height={10} borderRadius='50%' backgroundColor='#2683F6'></Box></Grid>
                     <Grid item flexGrow={1} color='black' fontSize={12} textAlign='center'>Funded</Grid>
                   </Grid>
                 }
                 {
-                  !data.proposalVotings.approvedByCommunity &&                 
+                  data.proposalVotings.approvedByCommunity &&                 
                   <Grid container alignItems='center' flexWrap='nowrap'>
                     <Grid item ml='-6px'><Box width={10} height={10} borderRadius='50%' backgroundColor='#2683F6'></Box></Grid>
                     <Grid item flexGrow={1} color='black' fontSize={12} textAlign='center'>Approved By Community</Grid>
                   </Grid>
                 }
                 {
-                  !data.proposalVotings.executed &&                 
+                  data.proposalVotings.executed &&                 
                   <Grid container alignItems='center' flexWrap='nowrap'>
                     <Grid item ml='-6px'><Box width={10} height={10} borderRadius='50%' backgroundColor='#2683F6'></Box></Grid>
                     <Grid item flexGrow={1} color='black' fontSize={12} textAlign='center'>Executed</Grid>
                   </Grid>
                 }
                 {
-                  !data.proposalVotings.underReview &&                 
+                  data.proposalVotings.underReview &&                 
                   <Grid container alignItems='center' flexWrap='nowrap'>
                     <Grid item ml='-6px'><Box width={10} height={10} borderRadius='50%' backgroundColor='#2683F6'></Box></Grid>
                     <Grid item flexGrow={1} color='black' fontSize={12} textAlign='center'>Under Review</Grid>
                   </Grid>
                 }
                 {
-                  !data.proposalVotings.approved &&                 
+                  data.proposalVotings.approved &&                 
                   <Grid container alignItems='center' flexWrap='nowrap'>
                     <Grid item ml='-6px'><Box width={10} height={10} borderRadius='50%' backgroundColor='#2683F6'></Box></Grid>
                     <Grid item flexGrow={1} color='black' fontSize={12} textAlign='center'>Proposal Created</Grid>
@@ -242,7 +242,7 @@ const Proposals = () => {
               <Button onClick={ () => handleVoteNoClick(data) } variant="contained" sx={{backgroundColor:"#041431", borderRadius:5, fontSize:'15px!important', width:{xs:'100%', lg:130}}} size='small'>N O</Button>
             </Grid>
             { 
-              ( walletAddress === data.proposer && data.endTime === "0" ) &&
+              ( walletAddress === data.proposer ) &&
               <Grid item container justifyContent='end' md={12} lg={5} mt={{xs:1, lg:0}}>
                 <Button onClick={() => handleDeleteProposal(data)} variant="contained" sx={{backgroundColor:"#D9D9D9", borderRadius:5, fontSize:'15px!important', width:{xs:'100%', lg:200}}} size='small'>DELETE PROPOSAL</Button>
               </Grid>

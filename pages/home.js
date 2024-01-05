@@ -43,6 +43,10 @@ const Home = () => {
 
   const { deposits, distributes } = useSelector((state) => state.history);
 
+  React.useEffect(() => {
+    console.log(deposits, distributes)
+  }, [deposits])
+
   /**
    * convert WEI to eth
    * @param {*} wei 
@@ -52,7 +56,6 @@ const Home = () => {
     if (!wei || wei === "") {
       return 0;
     }
-
     const eth = _web3.utils.fromWei(wei, 'ether');
     return eth;
   };
@@ -83,6 +86,14 @@ const Home = () => {
   const handleBuyFGOLClick = () => {
     window.open('https://www.sushi.com/swap?chainId=137&token0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&token1=0x700481409de3f632F61a2AC9BFd76138357714da&swapAmount=1', '_blank');
   }
+  
+  /**
+   * open new window and go to there
+   * @param {*} url 
+  */
+  const _gotoBlank = (url) => {
+    window.open(url, '_blank');
+  }
 
 
 
@@ -97,7 +108,8 @@ const Home = () => {
   const _renderDepositHistoryItem = (data, i) => (
     <Grid key={`deposit_history_${i}`} fontSize={{ xs: 14, sm: 15 }} mt={1} color='black' container backgroundColor='#E6E6E6' borderRadius={3} padding={1} justifyContent='space-between'>
       <Grid item>{_timestampToDateForDeposit(data.created)}</Grid>
-      <Grid item flexGrow={1} pt='13px' px={1}><Box borderBottom="1px dashed black"></Box></Grid>
+      <Grid sx={{ cursor:'pointer' }} item flexGrow={1} pt='13px' px={1} onClick = {() => _gotoBlank(`https://goerli.etherscan.io/tx/${data.transactionHash}`)}>
+        <Box borderBottom="1px dashed black"></Box></Grid>
       <Grid item>
         <Box display='flex' alignItems='center' gap={2}>
           { !data.type && '-' }LP{" "}
@@ -114,8 +126,8 @@ const Home = () => {
       <Grid item flexGrow={1} px={{ xs: 1, sm: 5, md: 3 }}>
         <Grid container justifyContent='center'>
           {/* <Grid item> */}
-            <a target='_blank' href={`https://goerli.etherscan.io/address/${data.walletAddress}`} style={{color:'black'}}>
-              {data.shortWalletAddress}
+            <a target='_blank' href={`https://goerli.etherscan.io/tx/${data.transactionHash}`} style={{color:'black'}}>
+              {data.user.walletAddress.substring(0, 4) + " .... " + data.user.walletAddress.substring(data.user.walletAddress.length - 4)}
             </a>
           {/* </Grid> */}
           {/* <Grid item flexGrow={1} mx={1} mt='11px' borderTop='1px dashed black'></Grid>

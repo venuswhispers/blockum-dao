@@ -76,9 +76,11 @@ const Deposit = () => {
       
       showNotification("Deposit Approved.", "success");
       
-      await BlockumVaultContract.methods.deposit(depositValueWei).send({
+      const res = await BlockumVaultContract.methods.deposit(depositValueWei).send({
         from: walletAddress,
       });
+
+      console.log("tx", res)
       
       showNotification("Deposit Success.", "success");
 
@@ -86,7 +88,10 @@ const Deposit = () => {
         walletAddress: walletAddress,
         amount: value,
         created: new Date(),
-        type: true
+        type: true,
+        transactionHash: res.transactionHash,
+        blockHash: res.blockHash,
+        transactionIndex: res.transactionIndex
       });
 
       dispatch({

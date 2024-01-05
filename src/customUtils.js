@@ -78,6 +78,10 @@ export const _calcRemainTime = (endTime = 0) => {
 
     let seconds = endTime - new Date().getTime() / 1000;
 
+    if( seconds <= 0 ) {
+      return { d: 0, h: 0, m: 0, s: 0 }
+    }
+
     var d = Math.floor(seconds / (3600*24));
     var h = Math.floor(seconds % (3600*24) / 3600);
     var m = Math.floor(seconds % 3600 / 60);

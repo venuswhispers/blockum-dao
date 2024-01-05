@@ -70,7 +70,7 @@ const Withdraw = () => {
       openSpin(`Withdrawing ${value} LP tokens`);
 
       const withdrawValueWei = _web3.utils.toWei(value, 'ether');
-      await BlockumVaultContract.methods
+      const res = await BlockumVaultContract.methods
         .withdraw(withdrawValueWei)
         .send({
           from: walletAddress,
@@ -81,7 +81,10 @@ const Withdraw = () => {
         walletAddress: walletAddress,
         amount: value,
         created: new Date(),
-        type: false
+        type: false,
+        transactionHash: res.transactionHash,
+        blockHash: res.blockHash,
+        transactionIndex: res.transactionIndex
       });
 
       dispatch({

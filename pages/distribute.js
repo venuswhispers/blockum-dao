@@ -84,17 +84,26 @@ const Distribute = () => {
       await FGOLTokenContract.methods.approve(addressOfFGOLDistribution, distributeValueWei).send({ from: walletAddress });
       showNotification("Distribute Approved!", "success");
 
-      await FGOLDistributionContract.methods.allocateForDistribution(distributeValueWei).send({from: walletAddress});
+      const res = await FGOLDistributionContract.methods.allocateForDistribution(distributeValueWei).send({from: walletAddress});
+      console.log(res)
       showNotification("Distribute success!", "success");
 
       const response = await axios.post('/fgol-distribution/distribution', {
         distributionAmount: value,
-        walletAddress
+        walletAddress,
+        blockHash: res.blockHash,
+        transactionHash: res.transactionHash,
+        transactionIndex: res.transactionIndex
       });
 
       dispatch({
         type: ADD_DISTRIBUTE,
-        payload: response.data,
+        payload: {
+          ...response.data,
+          user: {
+            walletAddress
+          }
+        },
       });
 
       await updateWallet();

@@ -25,6 +25,7 @@ import SpinnerProvider from '../src/contexts/spinnerContext';
 import NotificationProvider from '../src/contexts/notificationContext';
 
 axios.defaults.baseURL = 'https://blockum.onrender.com/api';
+// axios.defaults.baseURL = 'http://localhost:5005/api';
 
 
 function MyApp({ Component, pageProps }) {
