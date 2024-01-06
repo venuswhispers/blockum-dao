@@ -139,7 +139,8 @@ const Withdraw = () => {
   React.useEffect(() => {
 
     async function initialFetch () {
-      let _vestingDuration = await BlockumVaultContract.methods.vestingDuration().call();
+      let _vestingDuration = await BlockumVaultContract.methods.getVestingTimeRemaining(walletAddress).call();
+      console.log(_vestingDuration)
       let _days = Math.floor( _vestingDuration / (24*3600) );
       _vestingDuration %= ( 24*3600 );
       let _hours = Math.floor( _vestingDuration / 3600 );

@@ -64,7 +64,7 @@ export const Web3Provider = ({ children }) => {
     try {
       const proposal = await _contract.methods.proposalDetails(_id).call();
       const totalMembersForProposal = await _contract.methods.getTotalMembersVotedForProposal(_id).call();
-      const voted = await _contract.methods.hasUserVoted(_walletAddress, _id).call();
+      const voted = await _contract.methods.votes(_walletAddress, _id).call();
 
       const proposalVotings = await _contract.methods.proposalVotings(_id).call();
       const isMember = await _contract.methods.isMember(_walletAddress).call();
