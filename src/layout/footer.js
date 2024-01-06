@@ -149,7 +149,7 @@ const Footer = ({ cookie }) => {
             <Grid container item xs="auto" gap={1} alignItems="center">
               <img src='/icons/lpToken.png' width={30} height={30}/>
               <Box>
-                <Typography color="white" fontSize={15} lineHeight={1} mt='2px'>FGOL:</Typography>
+                <Typography color="white" fontSize={15} lineHeight={1} mt='2px'>LP:</Typography>
                 <Typography fontSize={12} color="white" display={{ xs:'none', sm:"flex" }} lineHeight={1} mt='2px'>{ addressOfLPToken }</Typography>
                 <Typography fontSize={12} color="white" display={{ xs:'flex', sm:"none" }} lineHeight={1} mt='2px'>{ addressOfLPToken.substring(0, 13) + "..." + addressOfLPToken.substring(addressOfLPToken.length - 13) }</Typography>
               </Box>
