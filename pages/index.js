@@ -143,7 +143,7 @@ function index() {
             display='flex' alignItems='center' gap={2}
           >
             <Icon height={30} className='t-cursor-pointer hover:t-opacity-[0.6]' icon="cryptocurrency-color:matic" rotate={1} />
-            <Typography>Are you agree to switch to Polygon?</Typography>
+            <Typography>Do you agree to switch to Polygon?</Typography>
           </Box>
           <Grid container gap={1} justifyContent='center' mt={1}>
             <Button onClick={handleSwitchToPolygon} variant="contained" sx={{borderRadius:4,textTransform:'none', width:100,  backgroundColor:'#2683F6!important'}} size='small'>O K</Button>
