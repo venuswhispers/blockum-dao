@@ -1,3 +1,5 @@
+"use client"
+
 import { Icon } from '@iconify/react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -9,7 +11,7 @@ import useNotification from '../hooks/useNotification';
 const addressOfLPToken = '0x6007485F7329166d699824765554F4ca5baF5b58'.toLocaleLowerCase();
 const addressOfFGOLToken = '0x7Ab4CD9d41b7577198ac6aaD84E5f3F5C7EF1bd9'.toLocaleLowerCase();
 
-const Footer = () => {
+const Footer = ({ cookie }) => {
 
   const { showNotification } = useNotification();
 
@@ -23,8 +25,38 @@ const Footer = () => {
   }
 
   const openMetaMask = () => {
-    
+
   }
+
+  const cookieAsentNo = () => {
+    window.localStorage.setItem("cookie", "no");
+    window.dispatchEvent(new Event("storage"));
+  }
+  const cookieAsentYes = () => {
+    window.localStorage.setItem("cookie", "yes");
+    window.dispatchEvent(new Event("storage"));
+    /**
+     * set cookies for this site
+     */
+    const d = new Date();
+    const exdays = 1;
+    const cname = "venus";
+    const cvalue = 123;
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  
+  const cookieAsentClose = () => {
+    window.localStorage.setItem("cookie", "close");
+    window.dispatchEvent(new Event("storage"));
+  }
+
+  React.useEffect(() => {
+    if(!window.localStorage.getItem("cookie")) {
+      console.log("cookie asent bar...")
+    }
+  });
 
   return (
     <Grid container 
@@ -33,6 +65,19 @@ const Footer = () => {
       }}
       paddingBottom={2}
     >
+      {
+        !cookie &&
+        <Grid container pb={{ xs:1.5, md:0 }} sx={{ backgroundColor:"#2683F6" }} alignItems="center" justifyContent='space-between'> 
+          <Grid item color="white" textAlign={{ xs:'center', md:'right' }} xs={12} md={7} fontSize={20} padding={1}>
+            Do you accept our entire Cookies policy?
+          </Grid>
+          <Grid container item xs={12} md={5} gap={2} alignItems='center' justifyContent='center'>
+            <Button onClick={cookieAsentYes} variant="contained"  sx={{borderRadius:5, width:'150px', fontSize:16, textTransform:'none', backgroundColor:'#041431!important'}} size='small'>YES</Button>
+            <Button onClick={cookieAsentNo} variant="contained"  sx={{borderRadius:5, width:'150px', fontSize:16, textTransform:'none', backgroundColor:'#041431!important'}} size='small'>NO</Button>
+            <Icon onClick={cookieAsentClose} width={40} icon="ic:outline-close" />
+          </Grid>
+        </Grid>
+      }
       <Grid container 
         paddingX={4}
         paddingY={2}
