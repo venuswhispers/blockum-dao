@@ -14,7 +14,7 @@ const Layout = ({children}) => {
 
   React.useEffect(() => {
     if( typeof window != 'undefined' ) {
-      console.log(localStorage.getItem("cookie"));
+      setCookie(window.localStorage.getItem("cookie"))
       window.addEventListener("storage",function (e) {
         setCookie(window.localStorage.getItem("cookie"));
       });
