@@ -20,7 +20,7 @@ const Web3Context = createContext();
 
 const addressOfBlockumVault = '0x696dA2B5968f33F8C60e02F660e84B04709Da30b'.toLocaleLowerCase();
 const addressOfFGOLDistribution = '0x3978dfff811Dc43e250a293f32c51448DDC62584'.toLocaleLowerCase();
-const addressOfBlockumDAO = '0x64e5aa7324d9e00e265faecd1fa257aa30044f82'.toLocaleLowerCase();//modified
+const addressOfBlockumDAO = '0x107283B8b9420e188DF8ec44fDfE9d7bFc4f207f'.toLocaleLowerCase();//modified
 const addressOfLPToken = '0x6007485F7329166d699824765554F4ca5baF5b58'.toLocaleLowerCase();
 const addressOfFGOLToken = '0x7Ab4CD9d41b7577198ac6aaD84E5f3F5C7EF1bd9'.toLocaleLowerCase();
 
@@ -64,7 +64,7 @@ export const Web3Provider = ({ children }) => {
     try {
       const proposal = await _contract.methods.proposalDetails(_id).call();
       const totalMembersForProposal = await _contract.methods.getTotalMembersVotedForProposal(_id).call();
-      const voted = await _contract.methods.votes(_walletAddress, _id).call();
+      const voted = await _contract.methods.hasUserVoted(_walletAddress, _id).call();
 
       const proposalVotings = await _contract.methods.proposalVotings(_id).call();
       const isMember = await _contract.methods.isMember(_walletAddress).call();
