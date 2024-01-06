@@ -204,7 +204,7 @@ const Proposals = () => {
           <Typography width='100%' color='black' fontSize={{xs:20, sm:25}} px={1} borderBottom='4px solid #C9C9C9'>{ data.title }</Typography>
           <Grid container justifyContent='space-between'>
             <Typography color='#2683F6' fontSize={15}>Proposal Description</Typography>
-            <Typography color='#2683F6' fontSize={15}>You voted <span style={{fontWeight:800, fontSize:15}}>{ data.voted ? 'Yes' : 'No' }</span></Typography>
+            <Typography color='#2683F6' fontSize={15}>You voted <span style={{fontWeight:800, fontSize:15}}>{ data.voted ? 'Yes' : 'Not yet' }</span></Typography>
           </Grid>
           <Typography width='100%' height={100} className='scroller_view' sx={{overflowY:'scroll'}} fontSize={15} mt={1} color='black' backgroundColor='#E6E6E6' borderRadius={3} padding={1} justifyContent='space-between'>
             { data.description }
