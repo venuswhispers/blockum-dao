@@ -212,7 +212,7 @@ const Header = () => {
             walletAddress && 
             <Grid item container flexDirection='column' xs='auto'>
               <Typography fontSize={22} color='white' fontWeight={600} noWrap sx={{maxWidth:'200px'}}>{ _truncateText(walletAddress) }</Typography>
-              <Typography fontSize={22} marginTop={-1} color='white' fontWeight={600} >Member</Typography>
+              { isMember && <Typography fontSize={22} marginTop={-1} color='white' fontWeight={600} >Member</Typography> }
             </Grid>
           }
         </Grid>
