@@ -113,8 +113,16 @@ const SetPeriod = (props) => {
       router.push("/proposals");
       // await updateWallet();
     } catch (error) {
-      console.log(error);
-      showNotification("Period set failed", "error");
+      if ( error.code ) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      } else {
+        console.log(error);
+        showNotification("Period set failed", "error");
+      }
     } finally {
       setIsLoading(false);
       closeSpin();

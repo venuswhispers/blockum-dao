@@ -95,10 +95,17 @@ const Proposals = () => {
       showNotification("Vote success", "success");
       await updateProposalById(proposalId);
       
-    } catch (err) {
-      console.log(err);
-      
-      showNotification("Vote failed", "error");
+    } catch (error) {
+      if ( error.code ) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      } else {
+        console.log(error);
+        showNotification("Vote failed", "error");
+      }
       closeSpin();
     } 
   };
@@ -121,10 +128,17 @@ const Proposals = () => {
       showNotification("Vote success.", "success");
       await updateProposalById(proposalId);
       
-    } catch (err) {
-      console.log(err);
-      
-      showNotification("Vote failed", "error");
+    } catch (error) {
+      if ( error.code ) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      } else {
+        console.log(error);
+        showNotification("Vote failed", "error");
+      }
       closeSpin();
     }
   };
@@ -142,10 +156,17 @@ const Proposals = () => {
       //all update require
       await removeProposal( proposalId );
       showNotification("Delete success.", "success");
-    } catch (err) {
-      console.log(err);
-      
-      showNotification("Delete failed", "error");
+    } catch (error) {
+      if ( error.code ) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      } else {
+        console.log(error);
+        showNotification("Delete failed", "error");
+      }
       
     } finally {
       closeSpin();

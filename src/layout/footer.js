@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import useNotification from '../hooks/useNotification';
+import useWeb3 from '../hooks/useWeb3';
 
 const addressOfLPToken = '0x6007485F7329166d699824765554F4ca5baF5b58'.toLocaleLowerCase();
 const addressOfFGOLToken = '0x7Ab4CD9d41b7577198ac6aaD84E5f3F5C7EF1bd9'.toLocaleLowerCase();
@@ -14,6 +15,7 @@ const addressOfFGOLToken = '0x7Ab4CD9d41b7577198ac6aaD84E5f3F5C7EF1bd9'.toLocale
 const Footer = ({ cookie }) => {
 
   const { showNotification } = useNotification();
+  const { _web3 } = useWeb3();
 
   const copy2Clipboard = async( text ) => {
     try {
@@ -24,8 +26,57 @@ const Footer = ({ cookie }) => {
     }
   }
 
-  const openMetaMask = () => {
+  const importLPTokens = async() => {
 
+    if (window.ethereum) {
+      try {
+        await _web3.currentProvider.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: addressOfLPToken,
+              symbol: "LP",
+              decimals: 18,
+              // image: tokenImage, // if you have the image, it goes here
+            },
+          },
+        });
+        showNotification("You have successfully imported LP tokens", "success");
+      } catch (error) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      }
+    }
+  }
+  const impotFGOLTokens = async() => {
+
+    if (window.ethereum) {
+      try {
+        await _web3.currentProvider.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: addressOfFGOLToken,
+              symbol: "FGOL",
+              decimals: 18,
+              // image: tokenImage, // if you have the image, it goes here
+            },
+          },
+        });
+        showNotification("You have successfully imported FGOL tokens", "success");
+      } catch (error) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      }
+    }
   }
 
   const cookieAsentNo = () => {
@@ -103,17 +154,17 @@ const Footer = ({ cookie }) => {
                 <Typography fontSize={12} color="white" display={{ xs:'flex', sm:"none" }} lineHeight={1} mt='2px'>{ addressOfLPToken.substring(0, 13) + "..." + addressOfLPToken.substring(addressOfLPToken.length - 13) }</Typography>
               </Box>
               <Icon onClick={() => copy2Clipboard(addressOfLPToken)} style={{ cursor: 'pointer' }} width={30} height={35} icon="solar:copy-line-duotone" color="white" hFlip={true} />
-              <img onClick={openMetaMask} style={{ cursor:'pointer' }} src='/icons/metamask.webp' width={30} height={30}/>
+              <Icon icon="logos:metamask-icon" width={30} onClick={importLPTokens} style={{ cursor:'pointer' }}/>
             </Grid>
             <Grid container item xs="auto" gap={1} alignItems="center" mt={2}>
-              <img src='/icons/lpToken.png' width={30} height={30}/>
+              <img src='/icons/fgolToken.png' width={30} height={30}/>
               <Box>
                 <Typography color="white" fontSize={15} lineHeight={1} mt='2px'>FGOL:</Typography>
                 <Typography fontSize={12} color="white" display={{ xs:'none', sm:"flex" }} lineHeight={1} mt='2px'>{ addressOfFGOLToken }</Typography>
                 <Typography fontSize={12} color="white" display={{ xs:'flex', sm:"none" }} lineHeight={1} mt='2px'>{ addressOfFGOLToken.substring(0,13) + "..." + addressOfFGOLToken.substring(addressOfFGOLToken.length - 13) }</Typography>
               </Box>
               <Icon onClick={() => copy2Clipboard(addressOfFGOLToken)} style={{ cursor: 'pointer' }} width={30} height={35} icon="solar:copy-line-duotone" color="white" hFlip={true} />
-              <img onClick={openMetaMask} style={{ cursor:'pointer' }} src='/icons/metamask.webp' width={30} height={30}/>
+              <Icon icon="logos:metamask-icon" width={30} onClick={impotFGOLTokens} style={{ cursor:'pointer' }}/>
             </Grid>
             
           </Box>

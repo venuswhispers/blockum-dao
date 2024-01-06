@@ -117,8 +117,16 @@ const PayPerProposal = () => {
       await updateWallet();
       router.push("/proposal");
     } catch (error) {
-      console.log(error);
-      showNotification("Proposal fee payment failed", "error");
+      if ( error.code ) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      } else {
+        console.log(error);
+        showNotification("Proposal fee payment failed", "error");
+      }
     } finally {
       // setValue(0);
       setIsLoading(false);

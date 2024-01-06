@@ -116,9 +116,17 @@ const Proposal = () => {
       // await updateWallet();
       // router.push("/convince");
     } catch (error) {
-      console.log(error);
-      showNotification("Failed to create proposal", "error");
       closeSpin();
+      if ( error.code ) {
+        if ( error.code !== 4001 ) {
+          showNotification(error.message, "error")
+        } else {
+          showNotification("Your request has been cancelled", "info");
+        }
+      } else {
+        console.log(error);
+        showNotification("Failed to create proposal", "error");
+      }
     } finally {
       setIsLoading(false);
     }
