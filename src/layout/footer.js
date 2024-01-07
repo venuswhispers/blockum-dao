@@ -170,7 +170,7 @@ const Footer = ({ cookie }) => {
           </Box>
         </Grid>
 
-        <Grid color='white' item container xs={12} md={2} alignItems='start' flexDirection='column'>
+        <Grid color='white' item container xs={12} md={2} alignItems='center' flexDirection='column'>
           <Grid item width={100}>
             <Typography fontSize={16}>About us</Typography>
             <Typography fontSize={16}>Privacy Policy</Typography>
