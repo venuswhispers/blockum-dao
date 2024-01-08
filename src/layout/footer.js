@@ -109,6 +109,10 @@ const Footer = ({ cookie }) => {
     }
   });
 
+  const _gotBlank = (url) => {
+    window.open(url, '_blank');
+  }
+
   return (
     <Grid container 
       sx={{
@@ -172,7 +176,7 @@ const Footer = ({ cookie }) => {
 
         <Grid color='white' item container xs={12} md={2} alignItems='center' flexDirection='column'>
           <Grid item width={100}>
-            <Typography fontSize={16}>About us</Typography>
+            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/about-us")}>About us</Typography>
             <Typography fontSize={16}>Privacy Policy</Typography>
             <Typography fontSize={16}>Terms of use</Typography>
             <Typography fontSize={16}>Risk warning</Typography>
