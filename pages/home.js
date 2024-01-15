@@ -238,7 +238,7 @@ const Home = () => {
         >
           <Grid container rowSpacing={1} columnSpacing={2}>
             <Grid item xs={12} sm={6}>
-              <Button onClick={() => _gotoURL('https://app.1inch.io/#/137/simple/swap/amWETH/FGOL')} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#2683F6', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
+              <Button onClick={() => _gotoURL('https://www.sushi.com/swap?chainId=137&token0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&token1=0xa1B7797F97eE6C928A6Ce0E403f345b68945C6D7')} fullWidth size='large' variant="contained" sx={{ backgroundColor: '#2683F6', fontSize: 18, fontWeight: 600, borderRadius: 5 }}>
                 BUY FGOL
               </Button>
             </Grid>

@@ -98,10 +98,13 @@ function index() {
     }
 
 
-    if ( window.ethereum.net_version == 137 ) {
+    const _chainId = await _web3.eth.getChainId();
+    console.log(_chainId)
+    if ( _chainId === 137 ) {
       try {
         await connectMetaMask();
         showNotification("Connect success", "success");
+        router.push("/home");
       } catch (e) {
         showNotification("Connect failed", "error");
         console.log(e)

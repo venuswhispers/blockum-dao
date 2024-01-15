@@ -57,7 +57,7 @@ const Distribute = () => {
   const handleBuyFGOLClick = () => {
     // window.open('https://app.1inch.io/#/137/simple/swap/amWETH/FGOL', '_blank');
     // window.open('https://app.1inch.io/#/137/simple/swap/amWETH/FGOL');
-    router.push('https://app.1inch.io/#/137/simple/swap/amWETH/FGOL');
+    router.push('https://www.sushi.com/swap?chainId=137&token0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&token1=0xa1B7797F97eE6C928A6Ce0E403f345b68945C6D7');
   }
   /**
    * set the max LP token values
