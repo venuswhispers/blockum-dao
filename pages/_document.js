@@ -16,7 +16,7 @@ export default class MyDocument extends Document {
                     <meta name="keywords" 
                         content="NextJS,GFG,custom document next,custom app next" /> 
                     <link rel="shortcut icon" 
-                        href="favicon.ico" 
+                        href="https://blockumdao.org/wp-content/uploads/2023/05/Fav.png" 
                         type="image/x-icon" /> 
                     <link rel="stylesheet" href="/index.css" />
                     

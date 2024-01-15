@@ -177,11 +177,11 @@ const Footer = ({ cookie }) => {
         <Grid color='white' item container xs={12} md={2} alignItems='center' flexDirection='column'>
           <Grid item width={100}>
             <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/about-us")}>About us</Typography>
-            <Typography fontSize={16}>Privacy Policy</Typography>
-            <Typography fontSize={16}>Terms of use</Typography>
-            <Typography fontSize={16}>Risk warning</Typography>
-            <Typography fontSize={16}>FAQ</Typography>
-            <Typography fontSize={16}>Support</Typography>
+            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/privacy-policy/")}>Privacy Policy</Typography>
+            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/privacy-policy/")}>Terms of use</Typography>
+            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/risk-warning/")}>Risk warning</Typography>
+            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/faq")}>FAQ</Typography>
+            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/support/")}>Support</Typography>
           </Grid>
         </Grid>
       </Grid>

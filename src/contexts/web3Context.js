@@ -18,11 +18,11 @@ import { getHeaderData } from '../redux/action/utils';
 
 const Web3Context = createContext();
 
-const addressOfBlockumVault = '0x696dA2B5968f33F8C60e02F660e84B04709Da30b'.toLocaleLowerCase();
-const addressOfFGOLDistribution = '0x3978dfff811Dc43e250a293f32c51448DDC62584'.toLocaleLowerCase();
-const addressOfBlockumDAO = '0x107283B8b9420e188DF8ec44fDfE9d7bFc4f207f'.toLocaleLowerCase();//modified
-const addressOfLPToken = '0x6007485F7329166d699824765554F4ca5baF5b58'.toLocaleLowerCase();
-const addressOfFGOLToken = '0x7Ab4CD9d41b7577198ac6aaD84E5f3F5C7EF1bd9'.toLocaleLowerCase();
+const addressOfBlockumVault = '0x38315D43c29BE340CeA77ba1A9a2d1AFFCb09d16'.toLocaleLowerCase();//
+const addressOfFGOLDistribution = '0x85b4ef82C7ABf0bBFfC87f90CCe1894EA8a8397f'.toLocaleLowerCase();//
+const addressOfBlockumDAO = '0x37abbc85706f1483f150F1bbEe8a20D55EeA1736'.toLocaleLowerCase();//
+const addressOfLPToken = '0xCc2873F0E4F56f3cA8bC3D6D3Cd0B1328816CE5F'.toLocaleLowerCase();//
+const addressOfFGOLToken = '0xa1B7797F97eE6C928A6Ce0E403f345b68945C6D7'.toLocaleLowerCase();//
 
 
 export const Web3Provider = ({ children }) => {
