@@ -99,12 +99,16 @@ const SetPeriod = (props) => {
       setIsLoading(true);
       openSpin(`Setting proposal period`);
 
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
       await BlockumDAOContract.methods.setVotingParametersForProposal(
         proposalId,
         days,
         hours,
         minutes
-      ).send( { from: walletAddress } );
+      ).send( { from: walletAddress, gasPrice, nonce } );
 
       
       showNotification("Setting proposal period success", "success");

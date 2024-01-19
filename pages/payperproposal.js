@@ -104,11 +104,19 @@ const PayPerProposal = () => {
       openSpin(`Paying for proposal`);
 
       const currentProposalCreationFeeWei = await _web3.utils.toWei(currentProposalCreationFee, 'ether');
-      await FGOLTokenContract.methods.approve(addressOfFGOLDistribution, currentProposalCreationFeeWei).send({ from: walletAddress });
+
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
+      
+
+      await FGOLTokenContract.methods.approve(addressOfFGOLDistribution, currentProposalCreationFeeWei).send({ from: walletAddress, gasPrice, nonce });
 
       showNotification("Payment approved", "success");
 
-      const tx = await FGOLDistributionContract.methods.payProposalFee().send({ from: walletAddress });
+      nonce = await _web3.eth.getTransactionCount(walletAddress);
+      const tx = await FGOLDistributionContract.methods.payProposalFee().send({ from: walletAddress, gasPrice, nonce });
 
       showNotification("Proposal fee successfully paid", "success");
 

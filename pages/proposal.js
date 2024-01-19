@@ -104,7 +104,11 @@ const Proposal = () => {
       setIsLoading(true);
       openSpin(`Sending new proposal`);
 
-      const tx = await BlockumDAOContract.methods.createProposal( sector, title, description, presentationLink ).send({ from: walletAddress });
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
+      const tx = await BlockumDAOContract.methods.createProposal( sector, title, description, presentationLink ).send({ from: walletAddress, gasPrice, nonce });
       console.log("created", tx);
 
       showNotification("Proposal sent successfully", "success");

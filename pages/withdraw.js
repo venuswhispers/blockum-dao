@@ -75,10 +75,17 @@ const Withdraw = () => {
       openSpin(`Withdrawing ${value} LP tokens`);
 
       const withdrawValueWei = _web3.utils.toWei(value, 'ether');
+
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
       const res = await BlockumVaultContract.methods
         .withdraw(withdrawValueWei)
         .send({
           from: walletAddress,
+          gasPrice,
+          nonce
         });
       showNotification("Withdraw Success.", "success")
 

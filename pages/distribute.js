@@ -86,24 +86,24 @@ const Distribute = () => {
 
       const distributeValueWei = _web3.utils.toWei( value, 'ether' );
 
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
+      // console.log( { _originGasPrice, _gasPrice, _nonce } );
+
       // const gasFee = _web3.utils.toWei("300", 'gwei'); // Convert gas price to wei
       // console.log(gasFee)
       const _gasPrice = _web3.utils.toWei('300', 'gwei');
-      console.log(_gasPrice)
         // Send the transaction with the increased gas fee
-      const tx = await FGOLTokenContract.methods.approve(addressOfFGOLDistribution, distributeValueWei).send({ from: walletAddress, gasPrice: _gasPrice })
+      const tx = await FGOLTokenContract.methods.approve(addressOfFGOLDistribution, distributeValueWei).send({ from: walletAddress, gasPrice, nonce })
       console.log(tx)
-      // console.log(_gasPrice)
-
-      // var gasEstimate = _web3.eth.estimateGas({data: bytecode});
-      // console.log(gasEstimate)
-
-      // await FGOLTokenContract.methods.approve(addressOfFGOLDistribution, distributeValueWei).send({ from: walletAddress });
-      // await FGOLTokenContract.methods.approve(addressOfFGOLDistribution, distributeValueWei).send({ from: walletAddress, gas: 200000, gasPrice: '20000000000' });
 
       showNotification("Distribute Approved!", "success");
 
-      const res = await FGOLDistributionContract.methods.allocateForDistribution(distributeValueWei).send({from: walletAddress});
+      nonce = await _web3.eth.getTransactionCount(walletAddress);
+
+      const res = await FGOLDistributionContract.methods.allocateForDistribution(distributeValueWei).send({from: walletAddress, gasPrice, nonce});
       console.log(res)
       showNotification("Distribute success!", "success");
 

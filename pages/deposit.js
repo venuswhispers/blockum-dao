@@ -71,18 +71,33 @@ const Deposit = () => {
 
     try {
 
+      console.log(value)
+
       setIsLoading(true);
       openSpin(`Depositing ${value} LP tokens`);
 
       const depositValueWei = _web3.utils.toWei(value, 'ether');
-      await LPTokenContract.methods
-        .approve(addressOfBlockumVault, depositValueWei)
-        .send({ from: walletAddress });
+
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const _gasPrice = parseInt(_originGasPrice * 1.5);
+
+      // console.log( { _originGasPrice, _gasPrice, _nonce } );
+
+      let _nonce = await _web3.eth.getTransactionCount(walletAddress);
+
+      // console.log({_nonce, depositValueWei, _gasPrice});
+
+      await LPTokenContract.methods.approve(addressOfBlockumVault, depositValueWei).send({ from: walletAddress, gasPrice: _gasPrice, nonce: _nonce });
       
       showNotification("Deposit Approved.", "success");
       
+      _nonce = await _web3.eth.getTransactionCount(walletAddress);
+      console.log(_nonce)
+
       const res = await BlockumVaultContract.methods.deposit(depositValueWei).send({
         from: walletAddress,
+        gasPrice: _gasPrice,
+        nonce: _nonce
       });
 
       console.log("tx", res)

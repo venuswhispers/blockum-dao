@@ -69,8 +69,15 @@ const Home = () => {
   const handleClaim = async () => {
     try {
       openSpin("Claiming FGOL tokens");
+
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
       await FGOLDistributionContract.methods.claim().send({
         from: walletAddress,
+        gasPrice,
+        nonce
       });
 
       showNotification("Claim success.", "success");
@@ -176,7 +183,7 @@ const Home = () => {
             }}
             justifyContent='space-between'
           >
-            <Typography width='100%' sx={{ borderBottom: '4px dashed #041431' }} color="white" fontSize='2.5rem' textAlign='center' fontWeight={600}>BALANCE:</Typography>
+            <Typography width='100%' sx={{ borderBottom: '4px dashed #041431' }} color="white" fontSize='2rem' textAlign='center' fontWeight={600}>BALANCE:</Typography>
             <Grid container justifyContent='center' mt={1}>
               <Grid item xs={6} textAlign='center'>
                 <Typography color='white'>ALL VAULTS</Typography>
@@ -217,7 +224,7 @@ const Home = () => {
             justifyContent='space-between'
           >
             <Box width={'100%'}>
-              <Typography sx={{ borderBottom: '4px dashed #2683F6' }} color="white" fontSize='2.5rem' textAlign='center' fontWeight={600}>TO CLAIM:</Typography>
+              <Typography sx={{ borderBottom: '4px dashed #2683F6' }} color="white" fontSize='2rem' textAlign='center' fontWeight={600}>TO CLAIM:</Typography>
               <Typography color='white' fontSize={30} textAlign='center' py={1}>
                 FGOL {" "}
                 {fgolTokenEth && Number(fgolTokenEth).toFixed(2)}

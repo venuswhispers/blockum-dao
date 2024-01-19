@@ -88,8 +88,15 @@ const Proposals = () => {
       openSpin("Voting this proposal");
 
       console.log(walletAddress, proposalId);
+
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
       await BlockumDAOContract.methods.vote(proposalId, true).send({
         from: walletAddress,
+        gasPrice,
+        nonce
       });
 
       showNotification("Vote success", "success");
@@ -122,8 +129,15 @@ const Proposals = () => {
 
     try {
       openSpin("Voting this proposal");
+
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
       await BlockumDAOContract.methods.vote(proposalId, false).send({
         from: walletAddress,
+        gasPrice,
+        nonce
       });
       showNotification("Vote success.", "success");
       await updateProposalById(proposalId);
@@ -151,7 +165,11 @@ const Proposals = () => {
     try {
       openSpin("Deleting this proposal");
 
-      await BlockumDAOContract.methods.removeProposal(proposalId).send({ from: walletAddress });
+      const _originGasPrice = await _web3.eth.getGasPrice();
+      const gasPrice = parseInt(_originGasPrice * 1.5);
+      let nonce = await _web3.eth.getTransactionCount(walletAddress);
+
+      await BlockumDAOContract.methods.removeProposal(proposalId).send({ from: walletAddress, gasPrice, nonce });
       openSpin('Updating Proposals');
       //all update require
       await removeProposal( proposalId );
