@@ -9,8 +9,8 @@ import React from 'react';
 import useNotification from '../hooks/useNotification';
 import useWeb3 from '../hooks/useWeb3';
 
-const addressOfLPToken = '0x6007485F7329166d699824765554F4ca5baF5b58'.toLocaleLowerCase();
-const addressOfFGOLToken = '0x7Ab4CD9d41b7577198ac6aaD84E5f3F5C7EF1bd9'.toLocaleLowerCase();
+const addressOfLPToken = '0xCc2873F0E4F56f3cA8bC3D6D3Cd0B1328816CE5F'.toLocaleLowerCase();
+const addressOfFGOLToken = '0xa1B7797F97eE6C928A6Ce0E403f345b68945C6D7'.toLocaleLowerCase();
 
 const Footer = ({ cookie }) => {
 
@@ -36,7 +36,7 @@ const Footer = ({ cookie }) => {
             type: 'ERC20',
             options: {
               address: addressOfLPToken,
-              symbol: "LP",
+              symbol: "SLP",
               decimals: 18,
               // image: tokenImage, // if you have the image, it goes here
             },
@@ -114,79 +114,83 @@ const Footer = ({ cookie }) => {
   }
 
   return (
-    <Grid container 
-      sx={{
-        backgroundColor:'#041431', 
-      }}
-      paddingBottom={2}
-    >
-      {
-        !cookie &&
-        <Grid container pb={{ xs:1.5, md:0 }} sx={{ backgroundColor:"#2683F6" }} alignItems="center" justifyContent='space-between'> 
-          <Grid item color="white" textAlign={{ xs:'center', md:'right' }} xs={12} md={7} fontSize={20} padding={1}>
-            Do you accept our entire Cookies policy?
-          </Grid>
-          <Grid container item xs={12} md={5} gap={2} alignItems='center' justifyContent='center'>
-            <Button onClick={cookieAsentYes} variant="contained"  sx={{borderRadius:5, width:'150px', fontSize:16, textTransform:'none', backgroundColor:'#041431!important'}} size='small'>YES</Button>
-            <Button onClick={cookieAsentNo} variant="contained"  sx={{borderRadius:5, width:'150px', fontSize:16, textTransform:'none', backgroundColor:'#041431!important'}} size='small'>NO</Button>
-            <Icon onClick={cookieAsentClose} width={40} icon="ic:outline-close" />
-          </Grid>
-        </Grid>
-      }
+    <Box sx={{ width:'100%', backgroundColor:'#041431' }} >
       <Grid container 
-        paddingX={4}
-        paddingY={2}
-        alignItems='center'
+        sx={{
+          backgroundColor:'#041431', 
+          maxWidth: 1500,
+          margin: 'auto'
+        }}
+        paddingBottom={2}
       >
-        <Grid item container xs={12} md="auto" sx={{justifyContent:{xs:'center', md:'left'}}} flexDirection="column">
-          <Grid item container xs="auto" alignItems='center' gap={2} sx={{justifyContent:{xs:'center', md:'left'}}}>
-            <img src='/icons/logo.png' width={50}/>
-            <Typography color='white' fontSize={30} fontWeight={600}>BLOCKUM</Typography>
-          </Grid>
-          <Grid item color='white' fontSize={14} textAlign={{xs:'center', md:'left'}}>
-            Decentralized Autonomous Organization
-          </Grid>
-        </Grid>
-
-        <Grid item xs container justifyContent="center" alignItems="center">
-          <Box my={5}>
-            <Grid container item xs="auto" gap={1} alignItems="center">
-              <img src='/icons/lpToken.png' width={30} height={30}/>
-              <Box>
-                <Typography color="white" fontSize={15} lineHeight={1} mt='2px'>LP:</Typography>
-                <Typography fontSize={12} color="white" display={{ xs:'none', sm:"flex" }} lineHeight={1} mt='2px'>{ addressOfLPToken }</Typography>
-                <Typography fontSize={12} color="white" display={{ xs:'flex', sm:"none" }} lineHeight={1} mt='2px'>{ addressOfLPToken.substring(0, 13) + "..." + addressOfLPToken.substring(addressOfLPToken.length - 13) }</Typography>
-              </Box>
-              <Icon onClick={() => copy2Clipboard(addressOfLPToken)} style={{ cursor: 'pointer' }} width={30} height={35} icon="solar:copy-line-duotone" color="white" hFlip={true} />
-              <Icon icon="logos:metamask-icon" width={30} onClick={importLPTokens} style={{ cursor:'pointer' }}/>
+        {
+          !cookie &&
+          <Grid container pb={{ xs:1.5, md:0 }} sx={{ backgroundColor:"#2683F6" }} alignItems="center" justifyContent='space-between'> 
+            <Grid item color="white" textAlign={{ xs:'center', md:'right' }} xs={12} md={7} fontSize={20} padding={1}>
+              Do you accept our entire Cookies policy?
             </Grid>
-            <Grid container item xs="auto" gap={1} alignItems="center" mt={2}>
-              <img src='/icons/fgolToken.png' width={30} height={30}/>
-              <Box>
-                <Typography color="white" fontSize={15} lineHeight={1} mt='2px'>FGOL:</Typography>
-                <Typography fontSize={12} color="white" display={{ xs:'none', sm:"flex" }} lineHeight={1} mt='2px'>{ addressOfFGOLToken }</Typography>
-                <Typography fontSize={12} color="white" display={{ xs:'flex', sm:"none" }} lineHeight={1} mt='2px'>{ addressOfFGOLToken.substring(0,13) + "..." + addressOfFGOLToken.substring(addressOfFGOLToken.length - 13) }</Typography>
-              </Box>
-              <Icon onClick={() => copy2Clipboard(addressOfFGOLToken)} style={{ cursor: 'pointer' }} width={30} height={35} icon="solar:copy-line-duotone" color="white" hFlip={true} />
-              <Icon icon="logos:metamask-icon" width={30} onClick={impotFGOLTokens} style={{ cursor:'pointer' }}/>
+            <Grid container item xs={12} md={5} gap={2} alignItems='center' justifyContent='center'>
+              <Button onClick={cookieAsentYes} variant="contained"  sx={{borderRadius:5, width:'150px', fontSize:16, textTransform:'none', backgroundColor:'#041431!important'}} size='small'>YES</Button>
+              <Button onClick={cookieAsentNo} variant="contained"  sx={{borderRadius:5, width:'150px', fontSize:16, textTransform:'none', backgroundColor:'#041431!important'}} size='small'>NO</Button>
+              <Icon onClick={cookieAsentClose} width={40} icon="ic:outline-close" />
             </Grid>
-            
-          </Box>
-        </Grid>
+          </Grid>
+        }
+        <Grid container 
+          paddingX={4}
+          paddingY={2}
+          alignItems='center'
+        >
+          <Grid item container xs={12} md="auto" sx={{justifyContent:{xs:'center', md:'left'}}} flexDirection="column">
+            <Grid item container xs="auto" alignItems='center' gap={2} sx={{justifyContent:{xs:'center', md:'left'}}}>
+              <img src='/icons/logo.png' width={50}/>
+              <Typography color='white' fontSize={30} fontWeight={600}>BLOCKUM</Typography>
+            </Grid>
+            <Grid item color='white' fontSize={14} textAlign={{xs:'center', md:'left'}}>
+              Decentralized Autonomous Organization
+            </Grid>
+          </Grid>
 
-        <Grid color='white' item container xs={12} md={2} alignItems='center' flexDirection='column'>
-          <Grid item width={100}>
-            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/about-us")}>About us</Typography>
-            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/privacy-policy/")}>Privacy Policy</Typography>
-            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/privacy-policy/")}>Terms of use</Typography>
-            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/risk-warning/")}>Risk warning</Typography>
-            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/faq")}>FAQ</Typography>
-            <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/support/")}>Support</Typography>
+          <Grid item xs container justifyContent="center" alignItems="center">
+            <Box my={5}>
+              <Grid container item xs="auto" gap={1} alignItems="center">
+                <img src='/icons/lpToken.png' width={30} height={30}/>
+                <Box>
+                  <Typography color="white" fontSize={15} lineHeight={1} mt='2px'>LP:</Typography>
+                  <Typography fontSize={12} color="white" display={{ xs:'none', sm:"flex" }} lineHeight={1} mt='2px'>{ addressOfLPToken }</Typography>
+                  <Typography fontSize={12} color="white" display={{ xs:'flex', sm:"none" }} lineHeight={1} mt='2px'>{ addressOfLPToken.substring(0, 13) + "..." + addressOfLPToken.substring(addressOfLPToken.length - 13) }</Typography>
+                </Box>
+                <div style={{ width: 25 }}><Icon onClick={() => copy2Clipboard(addressOfLPToken)} className='copy-icon' icon="solar:copy-line-duotone" color="white" hFlip={true} /></div>
+                <Icon icon="logos:metamask-icon" width={30} onClick={importLPTokens} style={{ cursor:'pointer' }}/>
+              </Grid>
+              <Grid container item xs="auto" gap={1} alignItems="center" mt={2}>
+                <img src='/icons/fgolToken.png' width={30} height={30}/>
+                <Box>
+                  <Typography color="white" fontSize={15} lineHeight={1} mt='2px'>FGOL:</Typography>
+                  <Typography fontSize={12} color="white" display={{ xs:'none', sm:"flex" }} lineHeight={1} mt='2px'>{ addressOfFGOLToken }</Typography>
+                  <Typography fontSize={12} color="white" display={{ xs:'flex', sm:"none" }} lineHeight={1} mt='2px'>{ addressOfFGOLToken.substring(0,13) + "..." + addressOfFGOLToken.substring(addressOfFGOLToken.length - 13) }</Typography>
+                </Box>
+                <div style={{ width: 25 }}><Icon onClick={() => copy2Clipboard(addressOfFGOLToken)} className='copy-icon' icon="solar:copy-line-duotone" color="white" hFlip={true} /></div>
+                <Icon icon="logos:metamask-icon" width={30} onClick={impotFGOLTokens} style={{ cursor:'pointer' }}/>
+              </Grid>
+              
+            </Box>
+          </Grid>
+
+          <Grid color='white' item container xs={12} md={2} alignItems='center' flexDirection='column'>
+            <Grid item width={100}>
+              <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/about-us")}>About us</Typography>
+              <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/privacy-policy/")}>Privacy Policy</Typography>
+              <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/privacy-policy/")}>Terms of use</Typography>
+              <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/risk-warning/")}>Risk warning</Typography>
+              <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/faq")}>FAQ</Typography>
+              <Typography fontSize={16} onClick={() => _gotBlank("https://blockumdao.org/support/")}>Support</Typography>
+            </Grid>
           </Grid>
         </Grid>
+        <Typography color='white' width='100%' marginTop={1} fontSize={15} textAlign='center'>BLOCKUM DAO 2024</Typography>
       </Grid>
-      <Typography color='white' width='100%' marginTop={1} fontSize={15} textAlign='center'>BLOCKUM DAO 2024</Typography>
-    </Grid>
+    </Box>
   )
 }
 

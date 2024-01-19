@@ -120,7 +120,7 @@ const Home = () => {
   const _renderDepositHistoryItem = (data, i) => (
     <Grid key={`deposit_history_${i}`} fontSize={{ xs: 14, sm: 15 }} mt={1} color='black' container backgroundColor='#E6E6E6' borderRadius={3} padding={1} justifyContent='space-between'>
       <Grid item>{_timestampToDateForDeposit(data.created)}</Grid>
-      <Grid sx={{ cursor:'pointer' }} item flexGrow={1} pt='13px' px={1} onClick = {() => _gotoBlank(`https://goerli.etherscan.io/tx/${data.transactionHash}`)}>
+      <Grid sx={{ cursor:'pointer' }} item flexGrow={1} pt='13px' px={1} onClick = {() => _gotoBlank(`https://polygonscan.com/tx/${data.transactionHash}`)}>
         <Box borderBottom="1px dashed black"></Box></Grid>
       <Grid item>
         <Box display='flex' alignItems='center' gap={2}>
@@ -138,7 +138,7 @@ const Home = () => {
       <Grid item flexGrow={1} px={{ xs: 1, sm: 5, md: 3 }}>
         <Grid container justifyContent='center'>
           {/* <Grid item> */}
-            <a target='_blank' href={`https://goerli.etherscan.io/tx/${data.transactionHash}`} style={{color:'black'}}>
+            <a target='_blank' href={`https://polygonscan.com/tx/${data.transactionHash}`} style={{color:'black'}}>
               {data.user.walletAddress.substring(0, 4) + " .... " + data.user.walletAddress.substring(data.user.walletAddress.length - 4)}
             </a>
           {/* </Grid> */}
@@ -154,7 +154,7 @@ const Home = () => {
   )
 
   return (
-    <Box padding={{ xs: 1, md: 5 }}>
+    <Box padding={{ xs: 1, md: 5, maxWidth: 1500, margin: 'auto' }}>
       <Grid container justifyContent='end'>
         <Box sx={{cursor:'pointer'}} display='flex' onClick={() => router.push("/proposals")} alignItems='center'><Typography color="#2683F6" fontWeight={600}>PROPOSALS</Typography><Icon hFlip={true} width={25} height={25} icon="ic:round-reply" color='#2683F6'/></Box>
       </Grid>
@@ -269,8 +269,8 @@ const Home = () => {
         mt={4}
         padding={{ xs: 1, md: 3 }}
       >
-        <Grid item container sm={12} md={6} sx={{ pr: { sm: 0, md: '4px' } }}>
-          <Grid item alignItems='start' backgroundColor="white" borderRadius={6} p={2} maxHeight={700} className='scroller' sx={{overflowY:'scroll'}}>
+        <Grid item container xs={12} md={6} sx={{ pr: { sm: 0, md: '4px' } }}>
+          <Grid item container alignItems='start' backgroundColor="white" borderRadius={6} p={2} maxHeight={700} className='scroller' sx={{overflowY:'scroll'}}>
             <Grid container>
               <Typography width='100%' color='black' fontSize={{ xs: 20, sm: 25 }} px={1} borderBottom='4px solid #C9C9C9'>DEPOSITS AND WITHDRAWLS:</Typography>
               <Grid container justifyContent='space-between' px={3} py={1}>
@@ -286,7 +286,7 @@ const Home = () => {
           </Grid>
         </Grid>
         <Grid item container sm={12} md={6} sx={{ pl: { sm: 0, md: '4px' }, mt: { xs: 1, md: 0 } }}>
-          <Grid item alignItems='start' backgroundColor="white" borderRadius={6} p={2} maxHeight={700} className='scroller' sx={{overflowY:'scroll'}}>
+          <Grid item container alignItems='start' backgroundColor="white" borderRadius={6} p={2} maxHeight={700} className='scroller' sx={{overflowY:'scroll'}}>
             <Grid container>
               <Typography width='100%' color='black' fontSize={{ xs: 20, sm: 25 }} px={1} borderBottom='4px solid #C9C9C9'>GENERAL DISTRIBUTION HISTORY:</Typography>
               <Grid container justifyContent='space-between' px={3} py={1}>

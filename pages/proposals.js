@@ -305,22 +305,24 @@ const Proposals = () => {
 
   return (
     <Box padding={{xs:1, md:5}}>
-      <Grid container justifyContent='space-between' gap={1} alignItems='start'>
-        <Box sx={{cursor:'pointer'}} display='flex' onClick={() => router.push("/home")} alignItems='center'><Icon width={25} height={25} icon="ic:round-reply" color='#2683F6'/><Typography color="#2683F6" fontWeight={600}>BACK</Typography></Box>
-        <Button onClick={() => router.push("/payperproposal")} fullWidth variant="contained" sx={{borderRadius:4,paddingY:1, textTransform:'none', backgroundColor:'#2683F6!important', width: {xs:'100%', sm: '200px'}}} size='large'>ADD NEW PROPOSAL</Button>
-      </Grid>
-      <Grid container px={3} mt={1} alignItems='end'>
-        <Grid item xs={6} textAlign='left' color='black' fontSize={23} fontWeight={600}>Proposals for Voting:</Grid>
-        <Grid item xs={6} textAlign='right' color='black' fontSize={18}>Total of <Typography fontWeight={600} fontSize={20} display='inline'>{proposals.length.toString().length === 1 ? '0' + proposals.length : proposals.length}</Typography> proposals</Grid>
-      </Grid>
-      <Grid container
-        borderRadius={5} backgroundColor='#041431'
-        pt={{xs:0, md:2}} pb={{xs:1, md:3}} px={{xs:1, md:2}}
-      >
-      {
-        proposals.map(item => _renderItem(item))
-      }
-      </Grid>
+      <Box sx={{ maxWidth: 1500, mx: 'auto' }}>
+        <Grid container justifyContent='space-between' gap={1} alignItems='start'>
+          <Box sx={{cursor:'pointer'}} display='flex' onClick={() => router.push("/home")} alignItems='center'><Icon width={25} height={25} icon="ic:round-reply" color='#2683F6'/><Typography color="#2683F6" fontWeight={600}>BACK</Typography></Box>
+          <Button onClick={() => router.push("/payperproposal")} fullWidth variant="contained" sx={{borderRadius:4,paddingY:1, textTransform:'none', backgroundColor:'#2683F6!important', width: {xs:'100%', sm: '200px'}}} size='large'>ADD NEW PROPOSAL</Button>
+        </Grid>
+        <Grid container px={3} mt={1} alignItems='end'>
+          <Grid item xs={6} textAlign='left' color='black' fontSize={23} fontWeight={600}>Proposals for Voting:</Grid>
+          <Grid item xs={6} textAlign='right' color='black' fontSize={18}>Total of <Typography fontWeight={600} fontSize={20} display='inline'>{proposals.length.toString().length === 1 ? '0' + proposals.length : proposals.length}</Typography> proposals</Grid>
+        </Grid>
+        <Grid container
+          borderRadius={5} backgroundColor='#041431'
+          pt={{xs:0, md:2}} pb={{xs:1, md:3}} px={{xs:1, md:2}}
+        >
+        {
+          proposals.map(item => _renderItem(item))
+        }
+        </Grid>
+      </Box>
     </Box>
   )
 }

@@ -195,50 +195,54 @@ const Header = () => {
 
 
   return (
-    <Grid container sx={{
-        backgroundColor:'#041431', 
-        paddingY:'20px', 
-        px:{
-          xs: '10px',
-          md: '20px'
-        }
-      }}
-    >
-      { showConfirmModal && _renderSwitchConfirmModal() }
-      <Grid item container xs={12} sm={6} marginBottom={{xs: collapse ? 2 : 0, sm:0}} gap={3} justifyContent='space-between' alignItems='center'>
-        <Grid item container xs='auto' gap={2} alignItems='center'>
-          <Grid item sx={{cursor:'pointer'}}>
-            <img src='/icons/logo.png' width={50} onClick={() => router.push("/")}/>
-          </Grid>
-          {
-            walletAddress && 
-            <Grid item container flexDirection='column' xs='auto'>
-              <Typography fontSize={22} color='white' fontWeight={600} noWrap sx={{maxWidth:'200px'}}>{ _truncateText(walletAddress) }</Typography>
-              <Typography fontSize={22} marginTop={-1} color='white' fontWeight={600} >{ isMember ? "Member" : "Not a member" }</Typography>
-            </Grid>
-          }
-        </Grid>
-
-        <Grid item xs='auto' alignItems='center' sx={{display:{xs:'block',sm:'none'}}}>
-          <Icon onClick={() => setCollapse(!collapse)} width={25} icon="fluent-mdl2:collapse-menu" className='t-cursor-pointer' color="white" />
-        </Grid>
-      </Grid>
-      <Grid 
-        item 
-        container xs={12} sm={6} gap={1} 
-        justifyContent='end' 
-        alignItems='center' 
-        sx={{
-          display: {
-            xs: collapse ? 'flex' : 'none',
-            sm: 'flex'
-          }
+    <Box sx={{ backgroundColor:'#041431', width:'100%' }} >
+      <Grid container sx={{
+          backgroundColor:'#041431', 
+          paddingY:'20px', 
+          px:{
+            xs: '10px',
+            md: '20px'
+          },
+          maxWidth: 1500,
+          margin:'auto'
         }}
       >
-        <Icon style={{cursor:'pointer'}} onClick={() => setShowConfirmModal(true)} height={40} className='t-cursor-pointer hover:t-opacity-[0.6]' icon="cryptocurrency-color:matic" rotate={1} />
-        <Button onClick={handleConnectClick} variant="contained" sx={{borderRadius:4,paddingY:1, textTransform:'none', width:{xs:'calc(100% - 50px)', sm:'auto'}, backgroundColor:'#2683F6!important'}} size='large'>{_renderConnectButtonText()}</Button>
+        { showConfirmModal && _renderSwitchConfirmModal() }
+        <Grid item container xs={12} sm={6} marginBottom={{xs: collapse ? 2 : 0, sm:0}} gap={3} justifyContent='space-between' alignItems='center'>
+          <Grid item container xs='auto' gap={2} alignItems='center'>
+            <Grid item sx={{cursor:'pointer'}}>
+              <img src='/icons/logo.png' width={50} onClick={() => router.push("/")}/>
+            </Grid>
+            {
+              walletAddress && 
+              <Grid item container flexDirection='column' xs='auto'>
+                <Typography fontSize={22} color='white' fontWeight={600} noWrap sx={{maxWidth:'200px'}}>{ _truncateText(walletAddress) }</Typography>
+                <Typography fontSize={22} marginTop={-1} color='white' fontWeight={600} >{ isMember ? "Member" : "Not a member" }</Typography>
+              </Grid>
+            }
+          </Grid>
+
+          <Grid item xs='auto' alignItems='center' sx={{display:{xs:'block',sm:'none'}}}>
+            <Icon onClick={() => setCollapse(!collapse)} width={25} icon="fluent-mdl2:collapse-menu" className='t-cursor-pointer' color="white" />
+          </Grid>
+        </Grid>
+        <Grid 
+          item 
+          container xs={12} sm={6} gap={1} 
+          justifyContent='end' 
+          alignItems='center' 
+          sx={{
+            display: {
+              xs: collapse ? 'flex' : 'none',
+              sm: 'flex'
+            }
+          }}
+        >
+          <Icon style={{cursor:'pointer'}} onClick={() => setShowConfirmModal(true)} height={40} className='t-cursor-pointer hover:t-opacity-[0.6]' icon="cryptocurrency-color:matic" rotate={1} />
+          <Button onClick={handleConnectClick} variant="contained" sx={{borderRadius:4,paddingY:1, textTransform:'none', width:{xs:'calc(100% - 50px)', sm:'auto'}, backgroundColor:'#2683F6!important'}} size='large'>{_renderConnectButtonText()}</Button>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   )
 }
 
