@@ -12,10 +12,9 @@ import useNotification from '../src/hooks/useNotification';
 import axios from 'axios';
 import useSpinner from '../src/hooks/useSpinner';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { ADD_DEPOSIT } from '../src/redux/action/type';
-
 const Deposit = () => {
+
 
   const {
     _web3,
