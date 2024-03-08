@@ -1,8 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"; 
 
 export default class MyDocument extends Document { 
-
-    
     render() { 
         return ( 
             <Html> 
@@ -19,7 +17,6 @@ export default class MyDocument extends Document {
                         href="https://blockumdao.org/wp-content/uploads/2023/05/Fav.png" 
                         type="image/x-icon" /> 
                     <link rel="stylesheet" href="/index.css" />
-                    
                 </Head> 
                 <body> 
                     <Main /> 
